@@ -1,8 +1,11 @@
 # pygame_samples
- 
+
+first of all, do this:  
+`pip install pygame`
+
 ## tictactoe
 
-most of source code genarated by chatgpt and tuned by me.  
+most of source code genarated by chatgpt and tuned by me.C
 go to `tictactoe` directory and type `python main.py` then you will see game window popup.  
 just click what you want to mark o or x.  
 

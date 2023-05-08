@@ -4,6 +4,13 @@ import sys
 # Initialize Pygame
 pygame.init()
 
+# Initialize Pygame mixer
+pygame.mixer.init()
+
+# Load sound file
+hit = pygame.mixer.Sound('sound_files/hit.mp3')
+end = pygame.mixer.Sound('sound_files/end.mp3')
+
 # Set the dimensions of the window
 width = 300
 height = 300
@@ -85,6 +92,9 @@ def main():
             if event.type == pygame.QUIT:
                 sys.exit()
             elif event.type == pygame.MOUSEBUTTONDOWN:
+                # Play the sound
+                hit.play()
+
                 # Get the coordinates of the mouse click
                 x, y = pygame.mouse.get_pos()
 
@@ -115,6 +125,9 @@ def main():
         # Check for a win or tie
         result = check_win()
         if result is not None:
+            # Play the sound
+            end.play()
+
             # Display the result
             if result == 'Tie':
                 draw_message_box('Tie')

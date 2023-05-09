@@ -4,6 +4,14 @@ import random
 # Initialize Pygame
 pygame.init()
 
+# Initialize Pygame mixer
+pygame.mixer.init()
+
+# Load sound file
+ping = pygame.mixer.Sound('sound_files/ping.mp3')
+pong = pygame.mixer.Sound('sound_files/pong.mp3')
+get = pygame.mixer.Sound('sound_files/get.mp3')
+
 # Set up the display
 width = 800
 height = 600
@@ -59,16 +67,20 @@ while running:
     
     # Check for collisions
     if ball.left < 0:
+        get.play()
         right_score += 1
         ball_velocity = [random.choice([ball_speed, -ball_speed]), random.randint(-ball_speed, ball_speed)]
         ball = pygame.Rect(width/2 - ball_size/2, height/2 - ball_size/2, ball_size, ball_size)
     if ball.right > width:
+        get.play()
         left_score += 1
         ball_velocity = [random.choice([ball_speed, -ball_speed]), random.randint(-ball_speed, ball_speed)]
         ball = pygame.Rect(width/2 - ball_size/2, height/2 - ball_size/2, ball_size, ball_size)
     if ball.top < 0 or ball.bottom > height:
+        pong.play()
         ball_velocity[1] = -ball_velocity[1]
     if ball.colliderect(left_paddle) or ball.colliderect(right_paddle):
+        ping.play()
         ball_velocity[0] = -ball_velocity[0]
     
     # Draw the game

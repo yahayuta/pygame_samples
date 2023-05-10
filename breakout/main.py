@@ -4,6 +4,14 @@ import random
 # Initialize Pygame
 pygame.init()
 
+# Initialize Pygame mixer
+pygame.mixer.init()
+
+# Load sound file
+paddle_sound = pygame.mixer.Sound('sound_files/paddle.mp3')
+brick_sound = pygame.mixer.Sound('sound_files/brick.mp3')
+wall_sound = pygame.mixer.Sound('sound_files/wall.mp3')
+
 # Set screen dimensions
 screen_width = 640
 screen_height = 480
@@ -58,8 +66,10 @@ while running:
 
     # Handle ball collisions with walls
     if ball_x < ball_radius or ball_x > screen_width - ball_radius:
+        wall_sound.play()
         ball_speed_x *= -1
     if ball_y < ball_radius:
+        wall_sound.play()
         ball_speed_y *= -1
     if ball_y > screen_height - ball_radius:
         running = False
@@ -67,12 +77,14 @@ while running:
     # Handle ball collisions with paddle
     if ball_speed_y > 0 and paddle_x - paddle_width/2 < ball_x < paddle_x + paddle_width/2 and \
             paddle_y - paddle_height/2 < ball_y < paddle_y + paddle_height/2:
+        paddle_sound.play()
         ball_speed_y *= -1
         score += 10
 
     # Handle ball collisions with bricks
     for brick in bricks:
         if ball_speed_y < 0 and brick.collidepoint(ball_x, ball_y):
+            brick_sound.play()
             bricks.remove(brick)
             ball_speed_y *= -1
             score += 20

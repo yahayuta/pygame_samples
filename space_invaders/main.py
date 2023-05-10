@@ -4,6 +4,14 @@ import random
 # Initialize Pygame
 pygame.init()
 
+# Initialize Pygame mixer
+pygame.mixer.init()
+
+# Load sound file
+explosion = pygame.mixer.Sound('sound_files/explosion.wav')
+invaderkilled = pygame.mixer.Sound('sound_files/invaderkilled.wav')
+shoot = pygame.mixer.Sound('sound_files/shoot.wav')
+
 # Set up the game window
 screen_width = 800
 screen_height = 600
@@ -51,6 +59,7 @@ while not game_over:
             elif event.key == pygame.K_RIGHT:
                 player.x += player_speed
             elif event.key == pygame.K_SPACE and pygame.time.get_ticks() - bullet_timer > bullet_delay:
+                shoot.play()
                 bullet = pygame.Rect(player.x + player.width/2 - bullet_size/2,
                                      player.y - bullet_size,
                                      bullet_size, bullet_size)
@@ -70,12 +79,15 @@ while not game_over:
     for enemy in enemies:
         for bullet in bullets:
             if enemy.colliderect(bullet):
+                invaderkilled.play()
                 bullets.remove(bullet)
                 enemies.remove(enemy)
                 player_score += 10
                 break
     for enemy in enemies:
         if enemy.colliderect(player):
+            explosion.play()
+            pygame.time.delay(2000)
             game_over = True
             break
 

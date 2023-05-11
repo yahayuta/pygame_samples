@@ -25,3 +25,9 @@ go to `space_invaders` directory and type `python main.py` then you will see gam
 move player to hit arrow left and arrow right.  
 gun fire to hit space.
 shoot enemies as many as you can.  
+
+## reversi
+go to `reversi` directory and type `python main.py` then you will see game window popup.  
+click where you want to place disk, then switch player. 
+try to get my disks as possible, higher count holder is going to be winner.   
+when no where place disc each other, game over.  

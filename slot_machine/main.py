@@ -22,7 +22,7 @@ reel_images = [
     pygame.image.load("image_files/seven.jpg"),
     pygame.image.load("image_files/wm.jpg"),
 ]
-spin_button = pygame.image.load("image_files/spin.jpg")
+spin_button = pygame.image.load("image_files/spin.png")
 spin_button_rect = spin_button.get_rect()
 spin_button_rect.center = (WIDTH // 2, HEIGHT - 20)
 
@@ -46,7 +46,7 @@ class Reel:
         self.current_index = random.randint(0, self.num_images - 1)
     
     def start_spin(self):
-        self.speed = random.randint(10, 20)
+        self.speed = random.randint(5000, 10000)
         self.spin_duration = random.randint(20, 40)
         self.spin_time = 0
         self.stopped = False
@@ -100,6 +100,12 @@ def game_loop():
         for reel in reels:
             reel.draw()
         screen.blit(spin_button, spin_button_rect)
+
+        # Check for a win
+        if reels[0].stopped == True and reels[1].stopped == True and reels[2].stopped == True and reels[0].current_index == reels[1].current_index == reels[2].current_index:
+            message = font.render("You Win!", True, BLACK)
+            screen.blit(message, (WIDTH / 4, 0))
+
         pygame.display.flip()
 
 # Start the game loop

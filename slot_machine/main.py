@@ -38,10 +38,16 @@ combinations = [
     (2, 2, 2, 25),  # Three wm
     (3, 3, 3, 10),  # Three plums
     (4, 4, 4, 5),  # Three bells
-    # (0, 0, -1, 2),  # Two sevens and anything
-    # (0, -1, -1, 1),  # One seven and anything
-    # (1, 1, -1, 1),  # Two cherries and anything
-    # (1, -1, -1, 0.5),  # One cherrie and anything
+]
+
+combinations_two = [
+    (0, 0, 2),  # Two sevens and anything
+    (1, 1, 1),  # Two cherries and anything
+]
+
+combinations_one = [
+    (1, 0.5),  # One cherrie and anything
+    (0, 1),  # One seven and anything
 ]
 
 # Define constants
@@ -94,16 +100,16 @@ reels = [
 ]
 
 # Set up fonts
-font = pygame.font.SysFont("Arial", 36)
+font = pygame.font.SysFont("Arial", 24)
 BLACK = (0, 0, 0)
 
 # Define the game loop
 def game_loop():
     all_stop = True
     total = 0
-    message = ''
     win = False
     running = True
+    str_message = ''
     while running:
         # Handle events
         for event in pygame.event.get():
@@ -119,12 +125,16 @@ def game_loop():
         # Update the game state
         for reel in reels:
             reel.update()
-        
+
         # Draw the game
         screen.blit(background, (0, 0))
         for reel in reels:
             reel.draw()
         screen.blit(spin_button, spin_button_rect)
+
+        # draw total
+        message_total = font.render(f'total:{str(total)}', True, BLACK)
+        screen.blit(message_total, (0, HEIGHT - 30))
 
         # Check for a win
         if all_stop == False and reels[0].stopped == True and reels[1].stopped == True and reels[2].stopped == True:
@@ -135,11 +145,25 @@ def game_loop():
                     total += combination[3]
                     win_sound.play()
                     win = True
-                    str_message = f"Win! {str(combination[3])}, total:{str(total)}"
-                    message = font.render(str_message, True, BLACK)
+                    str_message = f"Win! {str(combination[3])}"
+            if win == False:
+                for combination in combinations_two:
+                    if combination[0] == reels[0].current_index and combination[1] == reels[1].current_index:
+                        total += combination[2]
+                        win_sound.play()
+                        win = True
+                        str_message = f"Win! {str(combination[2])}"
+            if win == False:
+                for combination in combinations_one:
+                    if combination[0] == reels[0].current_index:
+                        total += combination[1]
+                        win_sound.play()
+                        win = True
+                        str_message = f"Win! {str(combination[1])}"
 
         if all_stop and win:
-            screen.blit(message, (0, 0))
+            message_win = font.render(str_message, True, BLACK)
+            screen.blit(message_win, (0, 0))
 
         pygame.display.flip()
 

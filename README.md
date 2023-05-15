@@ -35,3 +35,8 @@ when no where place disc each other, game over.
 ## slot_machine
 go to `slot_machine` directory and type `python main.py` then you will see game window popup.  
 click spin button, then reels start rolling. 
+
+## frogger
+go to `frogger` directory and type `python main.py` then you will see game window popup.  
+you go to top with no crash obstacles, then get score.  
+arrow up for forward and allow down for backward.  

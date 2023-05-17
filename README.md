@@ -40,3 +40,8 @@ click spin button, then reels start rolling.
 go to `frogger` directory and type `python main.py` then you will see game window popup.  
 you go to top with no crash obstacles, then get score.  
 arrow up for forward and allow down for backward.  
+
+## blackjack
+go to `blackjack` directory and type `python main.py` then you will see game window popup.  
+h key down for hit, get a new card
+s key down for stay, bet your score

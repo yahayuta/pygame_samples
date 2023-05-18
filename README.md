@@ -43,5 +43,9 @@ arrow up for forward and allow down for backward.
 
 ## blackjack
 go to `blackjack` directory and type `python main.py` then you will see game window popup.  
-h key down for hit, get a new card
-s key down for stay, bet your score
+h key down for hit, get a new card.  
+s key down for stay, bet your score.  
+
+## poker
+go to `poker` directory and type `python main.py` then you will see game window popup.  
+reload to hit space, no chance to change card.  

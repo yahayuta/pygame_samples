@@ -78,11 +78,11 @@ def determine_winner(player_hand, computer_hand):
     computer_rank = get_hand_rank(computer_hand)
 
     if player_rank == computer_rank:
-        return "It's a tie!"
+        return f"It's a tie! you:{player_rank} cpu:{computer_rank}"
     elif player_rank > computer_rank:
-        return "Player wins!"
+        return f"Player wins! you:{player_rank} cpu:{computer_rank}"
     else:
-        return "Computer wins!"
+        return f"Computer wins! you:{player_rank} cpu:{computer_rank}"
 
 # Game loop
 running = True
@@ -90,6 +90,15 @@ while running:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_SPACE:
+                # Create a deck of cards
+                deck = [(suit, rank) for suit in suits for rank in ranks]
+                random.shuffle(deck)
+
+                # Deal initial hands
+                player_hand = [deck.pop(), deck.pop(), deck.pop(), deck.pop(), deck.pop()]
+                computer_hand = [deck.pop(), deck.pop(), deck.pop(), deck.pop(), deck.pop()]
 
     # Clear the screen
     screen.fill((0, 128, 0))  # Green background color
@@ -101,10 +110,10 @@ while running:
         screen.blit(card_images[card], (x, y))
 
     # Draw computer's hand (showing only the back of the cards)
-    for i, _ in enumerate(computer_hand):
+    for i, card in enumerate(computer_hand):
         x = i * CARD_WIDTH + 50
         y = 50
-        screen.blit(card_back_image, (x, y))
+        screen.blit(card_images[card], (x, y))
 
     # Determine the winner
     winner = determine_winner(player_hand, computer_hand)

@@ -49,3 +49,9 @@ s key down for stay, bet your score.
 ## poker
 go to `poker` directory and type `python main.py` then you will see game window popup.  
 reload to hit space, no chance to change card.  
+
+## car_race
+go to `car_race` directory and type `python main.py` then you will see game window popup.  
+arrow right and allow left to do no collisions to enemy cars.
+when collision game is over.
+https://chat.openai.com/share/88c8e151-3447-40df-a5d9-fa560d3b0a41

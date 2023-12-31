@@ -52,6 +52,12 @@ reload to hit space, no chance to change card.
 
 ## car_race
 go to `car_race` directory and type `python main.py` then you will see game window popup.  
-arrow right and allow left to do no collisions to enemy cars.
-when collision game is over.
+arrow right and allow left to do no collisions to enemy cars.  
+when collision game is over.  
 https://chat.openai.com/share/88c8e151-3447-40df-a5d9-fa560d3b0a41
+
+## rock_paper_scissors
+go to `rock_paper_scissors` directory and type `python main.py` then you will see game window popup.  
+The player can choose between Rock (R), Paper (P), and Scissors (S), and the computer makes a random choice.   
+The winner is then displayed on the screen for a brief moment before restarting the game.   
+https://chat.openai.com/share/a422e608-7ab8-4c64-adab-1745522c795e

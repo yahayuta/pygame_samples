@@ -61,3 +61,7 @@ go to `rock_paper_scissors` directory and type `python main.py` then you will se
 The player can choose between Rock (R), Paper (P), and Scissors (S), and the computer makes a random choice.   
 The winner is then displayed on the screen for a brief moment before restarting the game.   
 https://chat.openai.com/share/a422e608-7ab8-4c64-adab-1745522c795e
+
+## torpedo_attack
+go to `torpedo_attack` directory and type `python main.py` then you will see game window popup.  
+hit any key to fire torpedo to aim enemy ship moving from left to right.  

@@ -58,6 +58,10 @@ while not game_over:
                 player.x -= player_speed
             elif event.key == pygame.K_RIGHT:
                 player.x += player_speed
+            elif event.key == pygame.K_UP:
+                player.y -= player_speed
+            elif event.key == pygame.K_DOWN:
+                player.y += player_speed
             elif event.key == pygame.K_SPACE and pygame.time.get_ticks() - bullet_timer > bullet_delay:
                 shoot.play()
                 bullet = pygame.Rect(player.x + player.width/2 - bullet_size/2,

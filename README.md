@@ -65,3 +65,7 @@ https://chat.openai.com/share/a422e608-7ab8-4c64-adab-1745522c795e
 ## torpedo_attack
 go to `torpedo_attack` directory and type `python main.py` then you will see game window popup.  
 hit any key to fire torpedo to aim enemy ship moving from left to right.  
+
+## pacman
+go to `pacman` directory and type `python main.py` then you will see game window popup.  
+eat all dots and run away from an enemy.

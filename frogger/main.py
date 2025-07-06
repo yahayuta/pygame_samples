@@ -102,33 +102,6 @@ while game_running:
     score_text = font.render("Score: " + str(score), True, WHITE)
     game_window.blit(score_text, (10, 10))
 
-    # Draw the player on the screen
-    pygame.draw.rect(game_window, GREEN, (player_x, player_y, 20, 20))
-
-    # Move the enemies
-    for i in range(num_enemies):
-        enemy_x, enemy_y = enemies[i]
-        enemy_x += enemy_speed
-        if enemy_x > WINDOW_WIDTH:
-            enemy_x = 0
-            enemy_y = random.randint(50, 400)
-        enemies[i] = (enemy_x, enemy_y)
-
-    # Draw the enemies on the screen
-    for enemy in enemies:
-        pygame.draw.rect(game_window, RED, (enemy[0], enemy[1], 20, 20))
-
-    # Check for collisions between the player and the enemies
-    for enemy in enemies:
-        if player_x < enemy[0] + 20 and player_x + 20 > enemy[0] and player_y < enemy[1] + 20 and player_y + 20 > enemy[1]:
-            score = 0
-            player_x = WINDOW_WIDTH // 2
-            player_y = WINDOW_HEIGHT - 50
-            for i in range(num_enemies):
-                enemy_x = random.randint(0, WINDOW_WIDTH)
-                enemy_y = random.randint(50, 200)
-                enemies[i] = (enemy_x, enemy_y)
-
     # Update the screen
     pygame.display.update()
 

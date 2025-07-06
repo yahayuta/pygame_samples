@@ -41,48 +41,59 @@ computer_hand = [deck.pop(), deck.pop(), deck.pop(), deck.pop(), deck.pop()]
 def get_hand_rank(hand):
     rank_counts = {}
     suit_counts = {}
+    rank_values = []
+    
     for card in hand:
         _, rank = card
-        rank = ranks.index(rank)  # Convert rank from string to integer
-        rank_counts[rank] = rank_counts.get(rank, 0) + 1
+        rank_idx = ranks.index(rank)
+        rank_values.append(rank_idx)
+        rank_counts[rank_idx] = rank_counts.get(rank_idx, 0) + 1
         suit_counts[card[0]] = suit_counts.get(card[0], 0) + 1
 
     is_flush = any(count == 5 for count in suit_counts.values())
-    is_straight = sorted(rank_counts.keys()) in (
-        [0, 1, 2, 3, 12],  # Ace-2-3-4-5 straight
-        list(range(min(rank_counts), max(rank_counts) + 1)),  # Normal straight
-    )
+    
+    # Check for straight
+    rank_values.sort()
+    is_straight = False
+    if len(rank_values) == 5:
+        # Check for Ace-low straight (A-2-3-4-5)
+        if rank_values == [0, 1, 2, 3, 12]:  # Ace, 2, 3, 4, 5
+            is_straight = True
+        # Check for normal straight
+        elif rank_values == list(range(min(rank_values), max(rank_values) + 1)):
+            is_straight = True
 
+    # Determine hand rank
     if is_flush and is_straight:
-        return "Straight Flush"
+        return ("Straight Flush", 8)
     elif any(count == 4 for count in rank_counts.values()):
-        return "Four of a Kind"
+        return ("Four of a Kind", 7)
     elif sorted(rank_counts.values()) == [2, 3]:
-        return "Full House"
+        return ("Full House", 6)
     elif is_flush:
-        return "Flush"
+        return ("Flush", 5)
     elif is_straight:
-        return "Straight"
+        return ("Straight", 4)
     elif any(count == 3 for count in rank_counts.values()):
-        return "Three of a Kind"
+        return ("Three of a Kind", 3)
     elif sorted(rank_counts.values()) == [1, 2, 2]:
-        return "Two Pair"
+        return ("Two Pair", 2)
     elif any(count == 2 for count in rank_counts.values()):
-        return "One Pair"
+        return ("One Pair", 1)
     else:
-        return "High Card"
+        return ("High Card", 0)
 
 # Determine the winner
 def determine_winner(player_hand, computer_hand):
-    player_rank = get_hand_rank(player_hand)
-    computer_rank = get_hand_rank(computer_hand)
+    player_rank, player_score = get_hand_rank(player_hand)
+    computer_rank, computer_score = get_hand_rank(computer_hand)
 
-    if player_rank == computer_rank:
-        return f"It's a tie! you:{player_rank} cpu:{computer_rank}"
-    elif player_rank > computer_rank:
-        return f"Player wins! you:{player_rank} cpu:{computer_rank}"
+    if player_score == computer_score:
+        return f"It's a tie! Both have {player_rank}"
+    elif player_score > computer_score:
+        return f"Player wins! {player_rank} vs {computer_rank}"
     else:
-        return f"Computer wins! you:{player_rank} cpu:{computer_rank}"
+        return f"Computer wins! {computer_rank} vs {player_rank}"
 
 # Game loop
 running = True

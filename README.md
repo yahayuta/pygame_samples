@@ -29,6 +29,7 @@ A collection of **14 classic arcade games** built with [Pygame](https://www.pyga
 - 📱 **Cross-Platform** - Works on Windows, macOS, Linux
 - 📖 **On-Screen Instructions** - Learn to play instantly
 - 🎯 **Enhanced Gameplay** - Improved mechanics and variety
+- 🤖 **AI Opponents** - Computer-controlled opponents
 
 ## 🎮 Games Included
 
@@ -40,7 +41,7 @@ A collection of **14 classic arcade games** built with [Pygame](https://www.pyga
 | 🏎️ **Car Race** | Racing | Arrow Keys | Dodge enemy cars |
 | 🐸 **Frogger** | Arcade | Arrow Keys | Cross road safely |
 | 🃏 **Poker** | Card | Spacebar | Classic 5-card poker |
-| 🏓 **Pong** | Arcade | W/S, Up/Down | Classic paddle game |
+| 🏓 **Pong** | Arcade | Up/Down | Player vs Computer |
 | ⚫ **Reversi** | Strategy | Mouse Click | Flip opponent's pieces |
 | ✂️ **Rock Paper Scissors** | Casual | R/P/S Keys | Beat the computer |
 | 🎰 **Slot Machine** | Casino | Mouse Click | Spin to win |
@@ -131,11 +132,10 @@ python space_invaders/main.py
 - **Scoring**: Hand rankings determine winner
 
 ### 🏓 Pong
-- **Objective**: Score by getting ball past opponent
-- **Controls**: 
-  - Left player: `W`/`S`
-  - Right player: `Up`/`Down`
+- **Objective**: Score by getting ball past computer
+- **Controls**: Up/Down arrows to move right paddle
 - **Scoring**: Points when ball passes opponent
+- **AI**: Computer-controlled left paddle with smart tracking
 
 ### ⚫ Reversi
 - **Objective**: Capture opponent's pieces
@@ -192,7 +192,7 @@ pygame_samples/
 │   ├── car_race/         # Car racing game
 │   ├── frogger/          # Frogger arcade game
 │   ├── poker/            # Poker card game
-│   ├── pong/             # Pong paddle game
+│   ├── pong/             # Pong vs Computer
 │   ├── reversi/          # Reversi strategy game
 │   ├── rock_paper_scissors/  # Rock Paper Scissors
 │   ├── slot_machine/     # Slot machine game
@@ -218,11 +218,13 @@ pygame_samples/
 - **🎮 Enhanced Gameplay** - Improved mechanics in Space Invaders, Poker, and Frogger
 - **🚀 Easy Launcher** - One-click game launcher for Windows users
 - **📋 Better Documentation** - Comprehensive README with game details
+- **🤖 AI Opponents** - Computer-controlled opponents in Pong
 
 ### 🔧 **Improvements:**
 - **Space Invaders**: Added enemy types, varied movement patterns, better spawning
 - **Poker**: Improved hand ranking logic and winner determination
 - **Frogger**: Removed duplicate code, cleaner implementation
+- **Pong**: Added computer AI opponent with smart ball tracking
 - **All Games**: Added on-screen instructions for instant learning
 
 ### 🎯 **User Experience:**
@@ -230,6 +232,7 @@ pygame_samples/
 - **Consistent Interface** - Same instruction format across all games
 - **Professional Polish** - Clean, modern game interfaces
 - **Easy Access** - Simple launcher for quick game selection
+- **Single Player Options** - AI opponents for solo gameplay
 
 ## 🤝 Contributing
 

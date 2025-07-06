@@ -45,19 +45,43 @@ score_font = pygame.font.SysFont(None, 50)
 title_font = pygame.font.SysFont(None, 24, bold=True)
 instruction_font = pygame.font.SysFont(None, 18)
 
+# Computer AI settings
+computer_speed = 4  # Slightly slower than player for fairness
+computer_reaction_delay = 0.1  # Small delay to make it beatable
+
+# Function to make computer move
+def computer_move():
+    # Predict where the ball will be
+    ball_center_y = ball.centery
+    
+    # Add some randomness to make it beatable
+    if random.random() < 0.1:  # 10% chance to make a mistake
+        ball_center_y += random.randint(-20, 20)
+    
+    # Move computer paddle towards ball
+    if left_paddle.centery < ball_center_y - 10:
+        left_paddle.y += computer_speed
+    elif left_paddle.centery > ball_center_y + 10:
+        left_paddle.y -= computer_speed
+    
+    # Keep paddle within screen bounds
+    if left_paddle.top < 0:
+        left_paddle.top = 0
+    if left_paddle.bottom > height:
+        left_paddle.bottom = height
+
 # Function to draw instructions
 def draw_instructions():
     # Title
-    title_text = title_font.render("PONG", True, white)
+    title_text = title_font.render("PONG vs COMPUTER", True, white)
     screen.blit(title_text, (10, 10))
     
     # Instructions
     instructions = [
-        "OBJECTIVE: Score by getting ball past opponent",
-        "CONTROLS:",
-        "  Left Player: W/S keys",
-        "  Right Player: Up/Down arrows",
+        "OBJECTIVE: Score by getting ball past computer",
+        "CONTROLS: Up/Down arrows to move right paddle",
         "SCORING: Points when ball passes opponent",
+        "COMPUTER: Left paddle (AI controlled)",
         "FIRST TO SCORE WINS!"
     ]
     
@@ -73,12 +97,11 @@ while running:
         if event.type == pygame.QUIT:
             running = False
     
-    # Move the paddles
+    # Move the computer paddle (left side)
+    computer_move()
+    
+    # Move the player paddle (right side)
     keys = pygame.key.get_pressed()
-    if keys[pygame.K_w] and left_paddle.top > 0:
-        left_paddle.move_ip(0, -paddle_speed)
-    if keys[pygame.K_s] and left_paddle.bottom < height:
-        left_paddle.move_ip(0, paddle_speed)
     if keys[pygame.K_UP] and right_paddle.top > 0:
         right_paddle.move_ip(0, -paddle_speed)
     if keys[pygame.K_DOWN] and right_paddle.bottom < height:

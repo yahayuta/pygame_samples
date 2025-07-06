@@ -42,6 +42,10 @@ for y in range(0, HEIGHT, GRID_SIZE):
     walls.add((0, y))
     walls.add((WIDTH - GRID_SIZE, y))
 
+# Font for instructions
+font = pygame.font.SysFont('Arial', 16)
+title_font = pygame.font.SysFont('Arial', 24, bold=True)
+
 # Player class
 class Player:
     def __init__(self):
@@ -102,6 +106,24 @@ class Dot:
     def draw(self, screen):
         pygame.draw.circle(screen, WHITE, (self.x + GRID_SIZE//2, self.y + GRID_SIZE//2), DOT_RADIUS)
 
+# Function to draw instructions
+def draw_instructions():
+    # Title
+    title_text = title_font.render("PAC-MAN", True, YELLOW)
+    screen.blit(title_text, (10, 10))
+    
+    # Instructions
+    instructions = [
+        "OBJECTIVE: Eat all dots while avoiding ghosts",
+        "CONTROLS: Arrow Keys to move",
+        "SCORING: Points for dots eaten",
+        "GAME OVER: Touch a ghost"
+    ]
+    
+    for i, instruction in enumerate(instructions):
+        text = font.render(instruction, True, WHITE)
+        screen.blit(text, (10, 40 + i * 20))
+
 # Function to reset the game
 def reset_game():
     global player, enemies, dots
@@ -158,6 +180,9 @@ while running:
         enemy.draw(screen)
     for dot in dots:
         dot.draw(screen)
+    
+    # Draw instructions
+    draw_instructions()
     
     pygame.display.flip()
     clock.tick(30)

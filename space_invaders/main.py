@@ -36,6 +36,10 @@ player_size = 50
 enemy_size = 40
 bullet_size = 5
 
+# Font for instructions
+font = pygame.font.SysFont(None, 20)
+title_font = pygame.font.SysFont(None, 28, bold=True)
+
 # Enemy types with different properties
 enemy_types = [
     {"color": (0, 255, 0), "speed": 2, "points": 10, "size": 40},  # Green - slow, basic
@@ -62,6 +66,26 @@ for i in range(8):
         "move_timer": 0
     }
     enemies.append(enemy)
+
+# Function to draw instructions
+def draw_instructions():
+    # Title
+    title_text = title_font.render("SPACE INVADERS", True, (255, 255, 255))
+    screen.blit(title_text, (10, 10))
+    
+    # Instructions
+    instructions = [
+        "OBJECTIVE: Shoot all alien invaders",
+        "CONTROLS:",
+        "  Arrow Keys: Move",
+        "  Spacebar: Shoot",
+        "SCORING: Points for each alien destroyed",
+        "GAME OVER: Alien touches player"
+    ]
+    
+    for i, instruction in enumerate(instructions):
+        text = font.render(instruction, True, (255, 255, 255))
+        screen.blit(text, (10, 50 + i * 20))
 
 # Start the game loop
 game_over = False
@@ -161,11 +185,14 @@ while not game_over:
         pygame.draw.rect(screen, (255, 0, 0), bullet)
     
     score_text = pygame.font.SysFont(None, 30).render("Score: {}".format(player_score), True, (255, 255, 255))
-    screen.blit(score_text, (10, 10))
+    screen.blit(score_text, (10, 200))
     
     # Display enemy count
     enemy_count_text = pygame.font.SysFont(None, 30).render("Enemies: {}".format(len(enemies)), True, (255, 255, 255))
-    screen.blit(enemy_count_text, (10, 40))
+    screen.blit(enemy_count_text, (10, 230))
+    
+    # Draw instructions
+    draw_instructions()
     
     pygame.display.update()
 

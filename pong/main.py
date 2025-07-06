@@ -42,6 +42,28 @@ ball_velocity = [random.choice([ball_speed, -ball_speed]), random.randint(-ball_
 left_score = 0
 right_score = 0
 score_font = pygame.font.SysFont(None, 50)
+title_font = pygame.font.SysFont(None, 24, bold=True)
+instruction_font = pygame.font.SysFont(None, 18)
+
+# Function to draw instructions
+def draw_instructions():
+    # Title
+    title_text = title_font.render("PONG", True, white)
+    screen.blit(title_text, (10, 10))
+    
+    # Instructions
+    instructions = [
+        "OBJECTIVE: Score by getting ball past opponent",
+        "CONTROLS:",
+        "  Left Player: W/S keys",
+        "  Right Player: Up/Down arrows",
+        "SCORING: Points when ball passes opponent",
+        "FIRST TO SCORE WINS!"
+    ]
+    
+    for i, instruction in enumerate(instructions):
+        text = instruction_font.render(instruction, True, white)
+        screen.blit(text, (10, 40 + i * 20))
 
 # Main game loop
 running = True
@@ -92,6 +114,9 @@ while running:
     right_score_text = score_font.render(str(right_score), True, white)
     screen.blit(left_score_text, (width/4 - left_score_text.get_width()/2, 50))
     screen.blit(right_score_text, (3*width/4 - right_score_text.get_width()/2, 50))
+
+    # Draw instructions
+    draw_instructions()
 
     # Update the screen
     pygame.display.flip()

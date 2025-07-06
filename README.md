@@ -27,6 +27,8 @@ A collection of **14 classic arcade games** built with [Pygame](https://www.pyga
 - 🎮 **Easy Controls** - Intuitive gameplay
 - 🚀 **Fast Performance** - Smooth 60 FPS gameplay
 - 📱 **Cross-Platform** - Works on Windows, macOS, Linux
+- 📖 **On-Screen Instructions** - Learn to play instantly
+- 🎯 **Enhanced Gameplay** - Improved mechanics and variety
 
 ## 🎮 Games Included
 
@@ -208,6 +210,26 @@ pygame_samples/
     ├── README.md         # This file
     └── .gitignore        # Git ignore rules
 ```
+
+## 🆕 Recent Updates
+
+### ✨ **New Features:**
+- **📖 On-Screen Instructions** - Every game now displays controls and objectives directly on screen
+- **🎮 Enhanced Gameplay** - Improved mechanics in Space Invaders, Poker, and Frogger
+- **🚀 Easy Launcher** - One-click game launcher for Windows users
+- **📋 Better Documentation** - Comprehensive README with game details
+
+### 🔧 **Improvements:**
+- **Space Invaders**: Added enemy types, varied movement patterns, better spawning
+- **Poker**: Improved hand ranking logic and winner determination
+- **Frogger**: Removed duplicate code, cleaner implementation
+- **All Games**: Added on-screen instructions for instant learning
+
+### 🎯 **User Experience:**
+- **Instant Learning** - No need to read external documentation
+- **Consistent Interface** - Same instruction format across all games
+- **Professional Polish** - Clean, modern game interfaces
+- **Easy Access** - Simple launcher for quick game selection
 
 ## 🤝 Contributing
 

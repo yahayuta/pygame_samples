@@ -32,6 +32,8 @@ for suit in suits:
 
 # Define the font for displaying text on the screen
 font = pygame.font.SysFont('Arial', 24)
+title_font = pygame.font.SysFont('Arial', 28, bold=True)
+instruction_font = pygame.font.SysFont('Arial', 18)
 
 # Define a function to create a deck of cards
 def create_deck():
@@ -83,6 +85,26 @@ def display_dealer_hand(screen, dealer_hand, reveal):
             image = card_images['{}_{}'.format(card[0], card[1])]
         screen.blit(image, (x, y))
         x += 100
+
+# Function to draw instructions
+def draw_instructions():
+    # Title
+    title_text = title_font.render("BLACKJACK", True, (255, 255, 255))
+    screen.blit(title_text, (10, 10))
+    
+    # Instructions
+    instructions = [
+        "OBJECTIVE: Beat dealer without going over 21",
+        "CONTROLS:",
+        "  H - Hit (draw card)",
+        "  S - Stay (end turn)",
+        "SCORING: Closest to 21 wins",
+        "GAME OVER: Over 21 = bust"
+    ]
+    
+    for i, instruction in enumerate(instructions):
+        text = instruction_font.render(instruction, True, (255, 255, 255))
+        screen.blit(text, (10, 50 + i * 25))
 
 # Define the main function for the game
 def main():
@@ -152,6 +174,10 @@ def main():
         screen.fill((0, 128, 0))
         display_player_hand(screen, player_hand)
         display_dealer_hand(screen, dealer_hand, not player_turn)
+        
+        # Draw instructions
+        draw_instructions()
+        
         if player_wins:
             text = font.render('Player wins!', True, (255, 255, 255))
             screen.blit(text, (350, 300))

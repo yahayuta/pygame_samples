@@ -32,7 +32,9 @@ paddle_width = 120
 paddle_height = 10
 paddle_speed = 1
 score = 0
-font = pygame.font.Font(None, 36)
+font = pygame.font.SysFont(None, 36)
+title_font = pygame.font.SysFont(None, 24, bold=True)
+instruction_font = pygame.font.SysFont(None, 16)
 
 # Set brick variables
 brick_width = 60
@@ -51,6 +53,24 @@ for row in range(brick_rows):
         brick_x = brick_offset_left + col * (brick_width + brick_padding)
         brick_y = brick_offset_top + row * (brick_height + brick_padding)
         bricks.append(pygame.Rect(brick_x, brick_y, brick_width, brick_height))
+
+# Function to draw instructions
+def draw_instructions():
+    # Title
+    title_text = title_font.render("BREAKOUT", True, (255, 255, 255))
+    screen.blit(title_text, (10, 10))
+    
+    # Instructions
+    instructions = [
+        "OBJECTIVE: Break all bricks with the ball",
+        "CONTROLS: Left/Right arrows to move paddle",
+        "SCORING: Points for bricks broken",
+        "GAME OVER: Ball falls below paddle"
+    ]
+    
+    for i, instruction in enumerate(instructions):
+        text = instruction_font.render(instruction, True, (255, 255, 255))
+        screen.blit(text, (10, 40 + i * 18))
 
 # Game loop
 running = True
@@ -103,7 +123,11 @@ while running:
     for brick in bricks:
         pygame.draw.rect(screen, brick_color, brick)
     score_text = font.render("Score:    {}".format(score), True, (255, 255, 255))
-    screen.blit(score_text, (10, 10))
+    screen.blit(score_text, (10, 200))
+    
+    # Draw instructions
+    draw_instructions()
+    
     pygame.display.update()
 
 # Quit Pygame

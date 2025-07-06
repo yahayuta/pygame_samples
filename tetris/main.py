@@ -27,7 +27,8 @@ SHAPES = [
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 pygame.display.set_caption("Tetris")
 clock = pygame.time.Clock()
-font = pygame.font.SysFont("Arial", 24)
+font = pygame.font.SysFont("Arial", 16)
+title_font = pygame.font.SysFont("Arial", 20, bold=True)
 
 class Tetromino:
     def __init__(self):
@@ -102,6 +103,25 @@ class Tetris:
         score_text = font.render(f"Score: {self.score}", True, WHITE)
         screen.blit(score_text, (10, 10))
 
+    def draw_instructions(self):
+        # Title
+        title_text = title_font.render("TETRIS", True, WHITE)
+        screen.blit(title_text, (10, 40))
+        
+        # Instructions
+        instructions = [
+            "OBJECTIVE: Complete horizontal lines",
+            "CONTROLS:",
+            "  Left/Right: Move",
+            "  Up: Rotate",
+            "  Down: Drop faster",
+            "SCORING: 100 points per line"
+        ]
+        
+        for i, instruction in enumerate(instructions):
+            text = font.render(instruction, True, WHITE)
+            screen.blit(text, (10, 70 + i * 18))
+
     def run(self):
         drop_time = 0
         while self.running:
@@ -109,6 +129,7 @@ class Tetris:
             self.draw_grid()
             self.tetromino.draw()
             self.draw_score()
+            self.draw_instructions()
             pygame.display.flip()
             
             for event in pygame.event.get():

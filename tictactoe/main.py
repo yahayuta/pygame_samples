@@ -23,6 +23,8 @@ gray = (128, 128, 128)
 
 # Set the font
 font = pygame.font.SysFont('Arial', 100)
+title_font = pygame.font.SysFont('Arial', 20, bold=True)
+instruction_font = pygame.font.SysFont('Arial', 14)
 
 # Set the screen
 screen = pygame.display.set_mode(size)
@@ -80,6 +82,24 @@ def check_win():
 
     return 'Tie'
 
+# Function to draw instructions
+def draw_instructions():
+    # Title
+    title_text = title_font.render("TIC TAC TOE", True, black)
+    screen.blit(title_text, (10, 10))
+    
+    # Instructions
+    instructions = [
+        "OBJECTIVE: Get 3 in a row",
+        "CONTROLS: Mouse click to place X or O",
+        "SCORING: Win/Loss/Draw",
+        "PLAYERS: X goes first, then O"
+    ]
+    
+    for i, instruction in enumerate(instructions):
+        text = instruction_font.render(instruction, True, black)
+        screen.blit(text, (10, 35 + i * 15))
+
 # Main game loop
 def main():
     # Set the initial player
@@ -121,6 +141,9 @@ def main():
 
         # Draw the marks
         draw_marks()
+
+        # Draw instructions
+        draw_instructions()
 
         # Check for a win or tie
         result = check_win()

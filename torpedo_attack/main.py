@@ -4,6 +4,13 @@ import random
 # Initialize Pygame
 pygame.init()
 
+# Initialize Pygame mixer
+pygame.mixer.init()
+
+# Load sound files
+fire_sound = pygame.mixer.Sound('sound_files/shoot.wav')  # Reuse shoot sound for firing
+hit_sound = pygame.mixer.Sound('sound_files/explosion.wav')  # Reuse explosion sound for hits
+
 # Set up the screen
 screen_width = 800
 screen_height = 600
@@ -24,7 +31,7 @@ torpedo_fired = False
 # Enemy ship settings
 ship_width = 100
 ship_height = 10
-ship_speed = random.randint(2, 5)  # Random speed
+ship_speed = random.randint(1, 3)  # Slower speed (was 2-5, now 1-3)
 
 # Initialize ship position
 ship_x = -ship_width  # Start off-screen
@@ -52,6 +59,7 @@ while running:
                 torpedo_fired = True
                 torpedo_x = screen_width // 2 - torpedo_width // 2
                 torpedo_y = screen_height - torpedo_height
+                fire_sound.play()  # Play sound when torpedo is fired
 
     # Update torpedo position
     if torpedo_fired:
@@ -63,10 +71,11 @@ while running:
     ship_x += ship_speed
     if ship_x > screen_width:
         ship_x = -ship_width
-        ship_speed = random.randint(2, 5)  # Reset speed
+        ship_speed = random.randint(1, 3)  # Reset to slower speed
 
     # Check for collisions
     if torpedo_fired and torpedo_x < ship_x + ship_width and torpedo_x + torpedo_width > ship_x and torpedo_y < ship_y + ship_height and torpedo_y + torpedo_height > ship_y:
+        hit_sound.play()  # Play sound when torpedo hits ship
         score += 1
         torpedo_fired = False
         ship_x = -ship_width  # Reset ship position

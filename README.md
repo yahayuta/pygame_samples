@@ -30,6 +30,7 @@ A collection of **14 classic arcade games** built with [Pygame](https://www.pyga
 - 📖 **On-Screen Instructions** - Learn to play instantly
 - 🎯 **Enhanced Gameplay** - Improved mechanics and variety
 - 🤖 **AI Opponents** - Computer-controlled opponents
+- 🎵 **Generated Audio** - Programmatically created sound effects
 
 ## 🎮 Games Included
 
@@ -82,7 +83,13 @@ cd pygame_samples
 pip install pygame
 ```
 
-### Step 3: Run Games
+### Step 3: Generate Sound Files (Optional)
+```bash
+# Generate all sound effects
+python generate_sounds.py
+```
+
+### Step 4: Run Games
 ```bash
 # Use the launcher (Windows)
 start_games.bat
@@ -180,6 +187,7 @@ python space_invaders/main.py
 - **Objective**: Sink enemy ships
 - **Controls**: Any key to fire torpedo
 - **Scoring**: Points for each ship sunk
+- **Audio**: Fire and hit sound effects
 
 ## 📁 Project Structure
 
@@ -202,10 +210,12 @@ pygame_samples/
 │   └── torpedo_attack/   # Torpedo Attack shooter
 ├── 🎵 Assets
 │   ├── cards/            # Card images
-│   ├── sound_files/      # Audio effects
+│   ├── sound_files/      # Audio effects (generated)
 │   └── image_files/      # Game graphics
 ├── 🚀 Launchers
 │   └── start_games.bat   # Windows game launcher
+├── 🛠️ Tools
+│   └── generate_sounds.py # Sound file generator
 └── 📄 Documentation
     ├── README.md         # This file
     └── .gitignore        # Git ignore rules
@@ -219,12 +229,14 @@ pygame_samples/
 - **🚀 Easy Launcher** - One-click game launcher for Windows users
 - **📋 Better Documentation** - Comprehensive README with game details
 - **🤖 AI Opponents** - Computer-controlled opponents in Pong
+- **🎵 Sound Generation** - Programmatically created audio effects
 
 ### 🔧 **Improvements:**
 - **Space Invaders**: Added enemy types, varied movement patterns, better spawning
 - **Poker**: Improved hand ranking logic and winner determination
 - **Frogger**: Removed duplicate code, cleaner implementation
 - **Pong**: Added computer AI opponent with smart ball tracking
+- **Torpedo Attack**: Added sound effects and slower ship speeds
 - **All Games**: Added on-screen instructions for instant learning
 
 ### 🎯 **User Experience:**
@@ -233,6 +245,13 @@ pygame_samples/
 - **Professional Polish** - Clean, modern game interfaces
 - **Easy Access** - Simple launcher for quick game selection
 - **Single Player Options** - AI opponents for solo gameplay
+- **Immersive Audio** - Generated sound effects for all games
+
+### 🔊 **Audio System:**
+- **Generated Sounds** - 20+ sound effects created programmatically
+- **High Quality** - 44.1kHz, 16-bit audio
+- **Game-Specific** - Unique sounds for each game type
+- **Realistic Effects** - Proper decay and frequency modulation
 
 ## 🤝 Contributing
 

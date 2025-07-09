@@ -342,6 +342,75 @@ def create_game_over_sound(filename):
         wav_file.setframerate(sample_rate)
         wav_file.writeframes(audio_data.tobytes())
 
+def create_power_sound(filename):
+    """Create power pellet sound for Pac-Man"""
+    sample_rate = 44100
+    duration = 0.3
+    t = np.linspace(0, duration, int(sample_rate * duration), False)
+    
+    # Ascending power sound
+    frequency = 300 + 400 * t / duration
+    audio_data = np.sin(2 * np.pi * frequency * t) * 0.3
+    
+    # Add slight decay
+    decay = np.exp(-1 * t)
+    audio_data = audio_data * decay
+    
+    # Convert to 16-bit integers
+    audio_data = (audio_data * 32767).astype(np.int16)
+    
+    with wave.open(filename, 'w') as wav_file:
+        wav_file.setnchannels(1)
+        wav_file.setsampwidth(2)
+        wav_file.setframerate(sample_rate)
+        wav_file.writeframes(audio_data.tobytes())
+
+def create_ghost_eaten_sound(filename):
+    """Create ghost eaten sound for Pac-Man"""
+    sample_rate = 44100
+    duration = 0.2
+    t = np.linspace(0, duration, int(sample_rate * duration), False)
+    
+    # Quick, satisfying ghost eaten sound
+    frequency = 800 + 600 * t / duration
+    audio_data = np.sin(2 * np.pi * frequency * t) * 0.25
+    
+    # Add decay
+    decay = np.exp(-2 * t)
+    audio_data = audio_data * decay
+    
+    # Convert to 16-bit integers
+    audio_data = (audio_data * 32767).astype(np.int16)
+    
+    with wave.open(filename, 'w') as wav_file:
+        wav_file.setnchannels(1)
+        wav_file.setsampwidth(2)
+        wav_file.setframerate(sample_rate)
+        wav_file.writeframes(audio_data.tobytes())
+
+def create_death_sound(filename):
+    """Create death sound for Pac-Man"""
+    sample_rate = 44100
+    duration = 0.5
+    t = np.linspace(0, duration, int(sample_rate * duration), False)
+    
+    # Descending death sound
+    frequency = 600 * np.exp(-2 * t)
+    audio_data = np.sin(2 * np.pi * frequency * t) * 0.3
+    
+    # Add decay
+    decay = np.exp(-1.5 * t)
+    audio_data = audio_data * decay
+    
+    # Convert to 16-bit integers
+    audio_data = (audio_data * 32767).astype(np.int16)
+    
+    with wave.open(filename, 'w') as wav_file:
+        wav_file.setnchannels(1)
+        wav_file.setsampwidth(2)
+        wav_file.setframerate(sample_rate)
+        wav_file.writeframes(audio_data.tobytes())
+
 def main():
     """Generate all sound files"""
     
@@ -353,7 +422,8 @@ def main():
         'tictactoe/sound_files',
         'slot_machine/sound_files',
         'torpedo_attack/sound_files',
-        'snake/sound_files'
+        'snake/sound_files',
+        'pacman/sound_files'
     ]
     
     for sound_dir in sound_dirs:
@@ -390,6 +460,12 @@ def main():
     create_eat_sound('snake/sound_files/eat.wav')
     create_game_over_sound('snake/sound_files/game_over.wav')
     
+    # Generate Pac-Man sounds
+    create_eat_sound('pacman/sound_files/eat.wav')
+    create_power_sound('pacman/sound_files/power.wav')
+    create_ghost_eaten_sound('pacman/sound_files/ghost_eaten.wav')
+    create_death_sound('pacman/sound_files/death.wav')
+    
     print("✅ All sound files generated successfully!")
     print("Generated sounds for:")
     print("- Space Invaders: shoot.wav, explosion.wav, invaderkilled.wav")
@@ -399,6 +475,7 @@ def main():
     print("- Slot Machine: start.mp3, win.wav")
     print("- Torpedo Attack: shoot.wav, explosion.wav")
     print("- Snake: eat.wav, game_over.wav")
+    print("- Pac-Man: eat.wav, power.wav, ghost_eaten.wav, death.wav")
 
 if __name__ == "__main__":
     main() 

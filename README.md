@@ -105,15 +105,19 @@ python tetris/main.py
 python space_invaders/main.py
 python snake/main.py
 ```
-```
 
 ## 🎯 How to Play
 
 ### 🟡 Pac-Man
 - **Objective**: Eat all dots while avoiding ghosts
 - **Controls**: Arrow keys to move
-- **Scoring**: Points for dots eaten
+- **Scoring**: Dots = 10, Power Pellets = 50, Ghosts = 200
 - **Game Over**: Touch a ghost
+- **Features**:
+  - Simpler, open maze for easier navigation
+  - Power pellets in the corners
+  - Ghost AI personalities
+  - Improved respawn logic: Pac-Man and ghosts always respawn inside the maze, never on a wall or outside
 
 ### 🃏 Blackjack
 - **Objective**: Beat dealer without going over 21
@@ -238,6 +242,16 @@ pygame_samples/
 
 ## 🆕 Recent Updates
 
+### 🟡 **Enhanced Pac-Man - Major Upgrade!**
+- **Classic Maze Layout** - Authentic Pac-Man maze with walls and corridors
+- **Power Pellets** - Make ghosts vulnerable for 10 seconds
+- **Ghost AI Personalities** - Different behaviors: chase, scatter, frightened
+- **Multiple Lives** - 3 lives with respawn system
+- **Comprehensive Scoring** - Dots (10), Power Pellets (50), Ghosts (200)
+- **Sound Effects** - Eat, power pellet, ghost eaten, and death sounds
+- **Smooth Movement** - Grid-based movement with direction buffering
+- **Visual Feedback** - Pac-Man mouth animation, ghost color changes
+
 ### 🐍 **Snake Game - Latest Addition!**
 - **Classic Arcade Gameplay** - Eat food to grow longer
 - **Visible Walls** - Gray walls with collision detection
@@ -249,6 +263,7 @@ pygame_samples/
 - **Restart Functionality** - Press SPACE to restart
 
 ### ✨ **New Features:**
+- **🟡 Enhanced Pac-Man** - Complete classic implementation with maze, power pellets, and ghost AI
 - **🐍 Snake Game** - Classic arcade game with wrap-around edges and progressive difficulty
 - **📖 On-Screen Instructions** - Every game now displays controls and objectives directly on screen
 - **🎮 Enhanced Gameplay** - Improved mechanics in Space Invaders, Poker, and Frogger
@@ -258,6 +273,7 @@ pygame_samples/
 - **🎵 Sound Generation** - Programmatically created audio effects
 
 ### 🔧 **Improvements:**
+- **Pac-Man**: Complete rewrite with classic maze layout, power pellets, ghost AI personalities, and sound effects
 - **Snake**: Complete implementation with visible walls, collision detection, progressive speed, and sound effects
 - **Space Invaders**: Added enemy types, varied movement patterns, better spawning
 - **Poker**: Improved hand ranking logic and winner determination
@@ -277,11 +293,12 @@ pygame_samples/
 - **Cross-Platform Compatibility** - Works on Windows, macOS, and Linux
 
 ### 🔊 **Audio System:**
-- **Generated Sounds** - 22+ sound effects created programmatically
+- **Generated Sounds** - 26+ sound effects created programmatically
 - **High Quality** - 44.1kHz, 16-bit audio
 - **Game-Specific** - Unique sounds for each game type
 - **Realistic Effects** - Proper decay and frequency modulation
 - **Snake Sounds** - Eat and game over effects for immersive gameplay
+- **Pac-Man Sounds** - Eat, power pellet, ghost eaten, and death effects
 - **Wall Mode** - Visible boundaries with collision detection for classic Snake gameplay
 
 ## 🤝 Contributing

@@ -296,6 +296,52 @@ def create_start_sound(filename):
         wav_file.setframerate(sample_rate)
         wav_file.writeframes(audio_data.tobytes())
 
+def create_eat_sound(filename):
+    """Create eat sound for Snake"""
+    sample_rate = 44100
+    duration = 0.15
+    t = np.linspace(0, duration, int(sample_rate * duration), False)
+    
+    # Quick, satisfying eat sound
+    frequency = 600 + 200 * t / duration
+    audio_data = np.sin(2 * np.pi * frequency * t) * 0.2
+    
+    # Add slight decay
+    decay = np.exp(-1 * t)
+    audio_data = audio_data * decay
+    
+    # Convert to 16-bit integers
+    audio_data = (audio_data * 32767).astype(np.int16)
+    
+    with wave.open(filename, 'w') as wav_file:
+        wav_file.setnchannels(1)
+        wav_file.setsampwidth(2)
+        wav_file.setframerate(sample_rate)
+        wav_file.writeframes(audio_data.tobytes())
+
+def create_game_over_sound(filename):
+    """Create game over sound for Snake"""
+    sample_rate = 44100
+    duration = 0.4
+    t = np.linspace(0, duration, int(sample_rate * duration), False)
+    
+    # Descending tone for game over
+    frequency = 400 * np.exp(-1.5 * t)
+    audio_data = np.sin(2 * np.pi * frequency * t) * 0.25
+    
+    # Add decay
+    decay = np.exp(-2 * t)
+    audio_data = audio_data * decay
+    
+    # Convert to 16-bit integers
+    audio_data = (audio_data * 32767).astype(np.int16)
+    
+    with wave.open(filename, 'w') as wav_file:
+        wav_file.setnchannels(1)
+        wav_file.setsampwidth(2)
+        wav_file.setframerate(sample_rate)
+        wav_file.writeframes(audio_data.tobytes())
+
 def main():
     """Generate all sound files"""
     
@@ -306,7 +352,8 @@ def main():
         'breakout/sound_files',
         'tictactoe/sound_files',
         'slot_machine/sound_files',
-        'torpedo_attack/sound_files'
+        'torpedo_attack/sound_files',
+        'snake/sound_files'
     ]
     
     for sound_dir in sound_dirs:
@@ -339,6 +386,10 @@ def main():
     create_shoot_sound('torpedo_attack/sound_files/shoot.wav')
     create_explosion_sound('torpedo_attack/sound_files/explosion.wav')
     
+    # Generate Snake sounds
+    create_eat_sound('snake/sound_files/eat.wav')
+    create_game_over_sound('snake/sound_files/game_over.wav')
+    
     print("✅ All sound files generated successfully!")
     print("Generated sounds for:")
     print("- Space Invaders: shoot.wav, explosion.wav, invaderkilled.wav")
@@ -347,6 +398,7 @@ def main():
     print("- Tic Tac Toe: hit.mp3, end.mp3")
     print("- Slot Machine: start.mp3, win.wav")
     print("- Torpedo Attack: shoot.wav, explosion.wav")
+    print("- Snake: eat.wav, game_over.wav")
 
 if __name__ == "__main__":
     main() 

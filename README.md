@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)](https://github.com/yourusername/pygame_samples)
 
-A collection of **14 classic arcade games** built with [Pygame](https://www.pygame.org/). Perfect for learning game development and having fun! 🚀
+A collection of **15 classic arcade games** built with [Pygame](https://www.pygame.org/). Perfect for learning game development and having fun! 🚀
 
 ## 📋 Table of Contents
 
@@ -20,7 +20,7 @@ A collection of **14 classic arcade games** built with [Pygame](https://www.pyga
 
 ## 🎯 Features
 
-- ✅ **14 Complete Games** - All fully playable
+- ✅ **15 Complete Games** - All fully playable
 - 🎨 **Modern UI** - Clean, responsive interfaces
 - 🔊 **Sound Effects** - Immersive audio experience
 - 🎯 **Score Systems** - Track your progress
@@ -50,6 +50,7 @@ A collection of **14 classic arcade games** built with [Pygame](https://www.pyga
 | 🧩 **Tetris** | Puzzle | Arrow Keys | Stack falling blocks |
 | ❌ **Tic Tac Toe** | Strategy | Mouse Click | Classic X's and O's |
 | 🚀 **Torpedo Attack** | Arcade | Any Key | Sink enemy ships |
+| 🐍 **Snake** | Arcade | Arrow Keys | Eat food to grow longer |
 
 ## ⚡ Quick Start
 
@@ -63,6 +64,10 @@ start_games.bat
 ```bash
 # Navigate to any game folder and run
 cd pacman
+python main.py
+
+# Or try the new Snake game
+cd snake
 python main.py
 ```
 
@@ -98,6 +103,8 @@ start_games.bat
 python pacman/main.py
 python tetris/main.py
 python space_invaders/main.py
+python snake/main.py
+```
 ```
 
 ## 🎯 How to Play
@@ -189,6 +196,13 @@ python space_invaders/main.py
 - **Scoring**: Points for each ship sunk
 - **Audio**: Fire and hit sound effects
 
+### 🐍 Snake
+- **Objective**: Eat food to grow longer
+- **Controls**: Arrow keys to change direction
+- **Scoring**: Points for each food eaten
+- **Game Over**: Hit yourself or walls
+- **Features**: Visible walls with collision detection, speed increases with score
+
 ## 📁 Project Structure
 
 ```
@@ -207,7 +221,8 @@ pygame_samples/
 │   ├── space_invaders/   # Space Invaders shooter
 │   ├── tetris/           # Tetris puzzle game
 │   ├── tictactoe/        # Tic Tac Toe
-│   └── torpedo_attack/   # Torpedo Attack shooter
+│   ├── torpedo_attack/   # Torpedo Attack shooter
+│   └── snake/            # Snake arcade game
 ├── 🎵 Assets
 │   ├── cards/            # Card images
 │   ├── sound_files/      # Audio effects (generated)
@@ -223,35 +238,51 @@ pygame_samples/
 
 ## 🆕 Recent Updates
 
+### 🐍 **Snake Game - Latest Addition!**
+- **Classic Arcade Gameplay** - Eat food to grow longer
+- **Visible Walls** - Gray walls with collision detection
+- **Progressive Difficulty** - Speed increases with score
+- **Sound Effects** - Eat and game over audio feedback
+- **On-Screen Instructions** - Learn to play instantly
+- **Smooth Controls** - Responsive arrow key movement
+- **Score Tracking** - Points for each food eaten
+- **Restart Functionality** - Press SPACE to restart
+
 ### ✨ **New Features:**
+- **🐍 Snake Game** - Classic arcade game with wrap-around edges and progressive difficulty
 - **📖 On-Screen Instructions** - Every game now displays controls and objectives directly on screen
 - **🎮 Enhanced Gameplay** - Improved mechanics in Space Invaders, Poker, and Frogger
-- **🚀 Easy Launcher** - One-click game launcher for Windows users
+- **🚀 Easy Launcher** - One-click game launcher for Windows users (now with 15 games!)
 - **📋 Better Documentation** - Comprehensive README with game details
 - **🤖 AI Opponents** - Computer-controlled opponents in Pong
 - **🎵 Sound Generation** - Programmatically created audio effects
 
 ### 🔧 **Improvements:**
+- **Snake**: Complete implementation with visible walls, collision detection, progressive speed, and sound effects
 - **Space Invaders**: Added enemy types, varied movement patterns, better spawning
 - **Poker**: Improved hand ranking logic and winner determination
 - **Frogger**: Removed duplicate code, cleaner implementation
 - **Pong**: Added computer AI opponent with smart ball tracking
 - **Torpedo Attack**: Added sound effects and slower ship speeds
+- **Batch Launcher**: Updated to include all 15 games with proper navigation
 - **All Games**: Added on-screen instructions for instant learning
 
 ### 🎯 **User Experience:**
 - **Instant Learning** - No need to read external documentation
 - **Consistent Interface** - Same instruction format across all games
 - **Professional Polish** - Clean, modern game interfaces
-- **Easy Access** - Simple launcher for quick game selection
+- **Easy Access** - Simple launcher for quick game selection (15 games!)
 - **Single Player Options** - AI opponents for solo gameplay
 - **Immersive Audio** - Generated sound effects for all games
+- **Cross-Platform Compatibility** - Works on Windows, macOS, and Linux
 
 ### 🔊 **Audio System:**
-- **Generated Sounds** - 20+ sound effects created programmatically
+- **Generated Sounds** - 22+ sound effects created programmatically
 - **High Quality** - 44.1kHz, 16-bit audio
 - **Game-Specific** - Unique sounds for each game type
 - **Realistic Effects** - Proper decay and frequency modulation
+- **Snake Sounds** - Eat and game over effects for immersive gameplay
+- **Wall Mode** - Visible boundaries with collision detection for classic Snake gameplay
 
 ## 🤝 Contributing
 

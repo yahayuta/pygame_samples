@@ -25,13 +25,14 @@ echo  11. Space Invaders
 echo  12. Tetris
 echo  13. Tic Tac Toe
 echo  14. Torpedo Attack
+echo  15. Snake
 echo.
 echo  0.  Exit
 echo.
 echo  ========================================
 echo.
 
-set /p choice="Enter your choice (0-14): "
+set /p choice="Enter your choice (0-15): "
 
 if "%choice%"=="1" goto pacman
 if "%choice%"=="2" goto blackjack
@@ -47,6 +48,7 @@ if "%choice%"=="11" goto space_invaders
 if "%choice%"=="12" goto tetris
 if "%choice%"=="13" goto tictactoe
 if "%choice%"=="14" goto torpedo_attack
+if "%choice%"=="15" goto snake
 if "%choice%"=="0" goto exit
 goto menu
 
@@ -158,6 +160,14 @@ goto menu
 cls
 echo Starting Torpedo Attack...
 cd torpedo_attack
+python main.py
+cd ..
+goto menu
+
+:snake
+cls
+echo Starting Snake...
+cd snake
 python main.py
 cd ..
 goto menu

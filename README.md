@@ -145,9 +145,22 @@ python snake/main.py
 - **Game Over**: Hit by enemy
 
 ### 🃏 Poker
-- **Objective**: Get the best 5-card hand
-- **Controls**: Spacebar to deal new hand
-- **Scoring**: Hand rankings determine winner
+- **Objective**: Get the best 5-card hand and win all the chips!
+- **Controls**:
+  - 1-9,0: Set bet/raise amount (10-100 chips)
+  - B: Bet   C: Call   R: Raise   F: Fold
+  - 1-5: Select cards to discard   D: Draw
+  - H: Show/hide help overlay
+  - S: Show/hide stats/leaderboard
+  - SPACE: Continue after showdown or game over
+- **Features**:
+  - Variable betting and raising amounts
+  - Modern, always-visible in-game UI (chips, pot, bet amount, phase)
+  - Stats/leaderboard overlay (track wins, streaks, biggest pot, etc.)
+  - On-screen help overlay (rules, controls, hand rankings)
+  - Smarter computer AI for betting and discarding
+  - Enhanced hand descriptions (e.g., "Pair of Aces", "Full House: Jacks over Sevens")
+  - Clear winner/loser and chip count display at showdown and game over
 
 ### 🏓 Pong
 - **Objective**: Score by getting ball past computer

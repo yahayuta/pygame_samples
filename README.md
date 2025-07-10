@@ -146,6 +146,11 @@ python snake/main.py
 
 ### 🃏 Poker
 - **Objective**: Get the best 5-card hand and win all the chips!
+- **Rules**: Follows standard casino Five Card Draw rules
+- **Players**: 1 human vs up to 3 AI (multi-player support)
+- **Ante**: All players ante 10 chips at the start of each hand
+- **Betting**: Minimum bet 10 chips, maximum bet 100 chips per round
+- **Dealer**: Dealer button alternates each hand; non-dealer acts first pre-draw, dealer acts first post-draw
 - **Controls**:
   - 1-9,0: Set bet/raise amount (10-100 chips)
   - B: Bet   C: Call   R: Raise   F: Fold
@@ -155,7 +160,7 @@ python snake/main.py
   - SPACE: Continue after showdown or game over
 - **Features**:
   - Variable betting and raising amounts
-  - Modern, always-visible in-game UI (chips, pot, bet amount, phase)
+  - Modern, always-visible in-game UI (chips, pot, bet amount, phase, dealer)
   - Stats/leaderboard overlay (track wins, streaks, biggest pot, etc.)
   - On-screen help overlay (rules, controls, hand rankings)
   - Smarter computer AI for betting and discarding

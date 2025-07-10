@@ -75,6 +75,23 @@ stats = {
     'last_winner': None
 }
 
+# --- Casino Poker Rule Enhancements ---
+ANTE_AMOUNT = 10
+MIN_BET = 10
+MAX_BET = 100
+
+dealer_is_player = True  # True = player is dealer, False = computer is dealer
+
+# Scaffold for multiple players (for now, just player and computer)
+players = [
+    {'name': 'You', 'chips': 1000, 'is_human': True},
+    {'name': 'Computer', 'chips': 1000, 'is_human': False}
+]
+# For compatibility, keep player_chips and computer_chips variables
+player_chips = players[0]['chips']
+computer_chips = players[1]['chips']
+
+
 def log_action(action):
     global action_history
     action_history.append(action)
@@ -83,7 +100,7 @@ def log_action(action):
 
 # Helper to reset hands and state
 def new_hand():
-    global deck, player_hand, computer_hand, pot, player_in, computer_in, player_selected, game_phase, message, last_computer_action, action_history, game_over
+    global deck, player_hand, computer_hand, pot, player_in, computer_in, player_selected, game_phase, message, last_computer_action, action_history, game_over, dealer_is_player, player_chips, computer_chips
     deck = [(suit, rank) for suit in suits for rank in ranks]
     random.shuffle(deck)
     player_hand = [deck.pop(), deck.pop(), deck.pop(), deck.pop(), deck.pop()]
@@ -97,6 +114,16 @@ def new_hand():
     last_computer_action = ''
     action_history = []
     game_over = False
+    # Alternate dealer
+    dealer_is_player = not dealer_is_player
+    # Ante
+    for p in players:
+        if p['chips'] >= ANTE_AMOUNT:
+            p['chips'] -= ANTE_AMOUNT
+            pot += ANTE_AMOUNT
+    # Sync chips
+    player_chips = players[0]['chips']
+    computer_chips = players[1]['chips']
 
 new_hand()
 
@@ -191,22 +218,25 @@ def computer_bet():
     rank_name, rank_score, _ = get_hand_rank(computer_hand)
     # Strong hands: raise big
     if rank_score >= 4:  # Straight or better
-        amount = min(100, computer_chips)
+        amount = min(MAX_BET, max(MIN_BET, computer_chips))
         return 'raise', amount
     # Medium hands: call or raise medium
     elif rank_score >= 2:  # Two pair or three of a kind
         import random
         if random.random() < 0.4:
-            amount = min(60, computer_chips)
+            amount = min(60, max(MIN_BET, computer_chips, MIN_BET))
+            amount = min(amount, MAX_BET)
             return 'raise', amount
         else:
-            amount = min(30, computer_chips)
+            amount = min(30, max(MIN_BET, computer_chips, MIN_BET))
+            amount = min(amount, MAX_BET)
             return 'call', amount
     # One pair: mostly call, sometimes fold
     elif rank_score == 1:
         import random
         if random.random() < 0.8:
-            amount = min(20, computer_chips)
+            amount = min(20, max(MIN_BET, computer_chips, MIN_BET))
+            amount = min(amount, MAX_BET)
             return 'call', amount
         else:
             return 'fold', 0
@@ -216,7 +246,8 @@ def computer_bet():
         if random.random() < 0.7:
             return 'fold', 0
         else:
-            amount = min(10, computer_chips)
+            amount = min(10, max(MIN_BET, computer_chips, MIN_BET))
+            amount = min(amount, MAX_BET)
             return 'call', amount
 
 # Helper to get rank name from index
@@ -301,12 +332,18 @@ while running:
                     pygame.K_1: 10, pygame.K_2: 20, pygame.K_3: 30, pygame.K_4: 40, pygame.K_5: 50,
                     pygame.K_6: 60, pygame.K_7: 70, pygame.K_8: 80, pygame.K_9: 90, pygame.K_0: 100
                 }
-                current_bet_amount = key_map[event.key]
+                amt = key_map[event.key]
+                if amt < MIN_BET:
+                    amt = MIN_BET
+                if amt > MAX_BET:
+                    amt = MAX_BET
+                current_bet_amount = amt
             if game_phase == 'bet1' or game_phase == 'bet2':
                 if event.key == pygame.K_b and player_in:
                     # Player bets
-                    if player_chips >= current_bet_amount:
+                    if player_chips >= current_bet_amount and MIN_BET <= current_bet_amount <= MAX_BET:
                         player_chips -= current_bet_amount
+                        players[0]['chips'] = player_chips
                         pot += current_bet_amount
                         log_action(f'You bet {current_bet_amount}')
                         # Computer responds
@@ -319,12 +356,14 @@ while running:
                             log_action('Computer folded')
                         elif ai_action == 'raise' and computer_chips >= ai_amount:
                             computer_chips -= ai_amount
+                            players[1]['chips'] = computer_chips
                             pot += ai_amount
                             message = f'Computer raises {ai_amount}! Press C to call, F to fold.'
                             last_computer_action = f'Computer raised {ai_amount}'
                             log_action(f'Computer raised {ai_amount}')
                         else:
                             computer_chips -= ai_amount
+                            players[1]['chips'] = computer_chips
                             pot += ai_amount
                             game_phase = 'draw' if game_phase == 'bet1' else 'showdown'
                             message = 'Both called. Proceed.'
@@ -334,6 +373,7 @@ while running:
                     # Player calls
                     if player_chips >= current_bet_amount:
                         player_chips -= current_bet_amount
+                        players[0]['chips'] = player_chips
                         pot += current_bet_amount
                         log_action(f'You called {current_bet_amount}')
                         game_phase = 'draw' if game_phase == 'bet1' else 'showdown'
@@ -344,6 +384,7 @@ while running:
                     # Player raises
                     if player_chips >= current_bet_amount:
                         player_chips -= current_bet_amount
+                        players[0]['chips'] = player_chips
                         pot += current_bet_amount
                         log_action(f'You raised {current_bet_amount}')
                         # Computer responds
@@ -356,6 +397,7 @@ while running:
                             log_action('Computer folded')
                         else:
                             computer_chips -= ai_amount
+                            players[1]['chips'] = computer_chips
                             pot += ai_amount
                             game_phase = 'draw' if game_phase == 'bet1' else 'showdown'
                             message = f'Both raised. Proceed.'
@@ -422,19 +464,25 @@ while running:
                     # Award pot
                     if player_in and not computer_in:
                         player_chips += pot
+                        players[0]['chips'] = player_chips
                     elif computer_in and not player_in:
                         computer_chips += pot
+                        players[1]['chips'] = computer_chips
                     else:
                         # Both in, determine winner
                         winner = determine_winner(player_hand, computer_hand)
                         if winner.startswith('Player'):
                             player_chips += pot
+                            players[0]['chips'] = player_chips
                         elif winner.startswith('Computer'):
                             computer_chips += pot
+                            players[1]['chips'] = computer_chips
                         else:
                             # Tie
                             player_chips += pot // 2
+                            players[0]['chips'] = player_chips
                             computer_chips += pot // 2
+                            players[1]['chips'] = computer_chips
                     # Check for game over
                     if player_chips <= 0 or computer_chips <= 0:
                         game_over = True
@@ -467,6 +515,11 @@ while running:
     pot_font = pygame.font.SysFont(None, 36, bold=True)
     pot_text = pot_font.render(f'POT: {pot}', True, (0,255,255))
     screen.blit(pot_text, (WIDTH//2 - pot_text.get_width()//2, 12))
+    # Draw dealer indicator at top center above the pot
+    dealer_font = pygame.font.SysFont(None, 22, bold=True)
+    dealer_name = 'You' if dealer_is_player else 'Computer'
+    dealer_text = dealer_font.render(f'Dealer: {dealer_name}', True, (255,200,0))
+    screen.blit(dealer_text, (WIDTH//2 - dealer_text.get_width()//2, 0))
 
     # Draw phase/action prompt as a colored bar below the top bar
     prompt_bar_height = 38

@@ -157,8 +157,11 @@ python snake/main.py
   - 1-5: Select cards to discard   D: Draw
   - H: Show/hide help overlay
   - S: Show/hide stats/leaderboard
+  - M: Mute/unmute sound
   - SPACE: Continue after showdown or game over
 - **Features**:
+  - Sound effects for dealing, betting, calling, raising, folding, drawing, winning, losing, and game over
+  - Mute toggle (M key)
   - Variable betting and raising amounts
   - Modern, always-visible in-game UI (chips, pot, bet amount, phase, dealer)
   - Stats/leaderboard overlay (track wins, streaks, biggest pot, etc.)

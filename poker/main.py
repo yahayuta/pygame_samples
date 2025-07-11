@@ -91,6 +91,31 @@ players = [
 player_chips = players[0]['chips']
 computer_chips = players[1]['chips']
 
+# --- Sound System ---
+import pygame.mixer
+pygame.mixer.init()
+
+sound_enabled = True
+
+def play_sound(name):
+    if not sound_enabled:
+        return
+    try:
+        sounds = {
+            'deal': pygame.mixer.Sound('poker/sounds/deal.wav'),
+            'bet': pygame.mixer.Sound('poker/sounds/bet.wav'),
+            'call': pygame.mixer.Sound('poker/sounds/call.wav'),
+            'raise': pygame.mixer.Sound('poker/sounds/raise.wav'),
+            'fold': pygame.mixer.Sound('poker/sounds/fold.wav'),
+            'draw': pygame.mixer.Sound('poker/sounds/draw.wav'),
+            'win': pygame.mixer.Sound('poker/sounds/win.wav'),
+            'lose': pygame.mixer.Sound('poker/sounds/lose.wav'),
+            'gameover': pygame.mixer.Sound('poker/sounds/gameover.wav'),
+        }
+        sounds[name].play()
+    except Exception:
+        pass
+
 
 def log_action(action):
     global action_history
@@ -124,6 +149,7 @@ def new_hand():
     # Sync chips
     player_chips = players[0]['chips']
     computer_chips = players[1]['chips']
+    play_sound('deal')
 
 new_hand()
 
@@ -326,6 +352,9 @@ while running:
                 continue
             if show_stats:
                 continue
+            if event.key == pygame.K_m:
+                sound_enabled = not sound_enabled
+                continue
             # Set bet amount with number keys
             if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5, pygame.K_6, pygame.K_7, pygame.K_8, pygame.K_9, pygame.K_0]:
                 key_map = {
@@ -346,6 +375,7 @@ while running:
                         players[0]['chips'] = player_chips
                         pot += current_bet_amount
                         log_action(f'You bet {current_bet_amount}')
+                        play_sound('bet')
                         # Computer responds
                         ai_action, ai_amount = computer_bet()
                         if ai_action == 'fold':
@@ -354,6 +384,7 @@ while running:
                             message = 'Computer folds! You win the pot.'
                             last_computer_action = 'Computer folded'
                             log_action('Computer folded')
+                            play_sound('fold')
                         elif ai_action == 'raise' and computer_chips >= ai_amount:
                             computer_chips -= ai_amount
                             players[1]['chips'] = computer_chips
@@ -361,6 +392,7 @@ while running:
                             message = f'Computer raises {ai_amount}! Press C to call, F to fold.'
                             last_computer_action = f'Computer raised {ai_amount}'
                             log_action(f'Computer raised {ai_amount}')
+                            play_sound('raise')
                         else:
                             computer_chips -= ai_amount
                             players[1]['chips'] = computer_chips
@@ -369,6 +401,7 @@ while running:
                             message = 'Both called. Proceed.'
                             last_computer_action = f'Computer called {ai_amount}'
                             log_action(f'Computer called {ai_amount}')
+                            play_sound('call')
                 elif event.key == pygame.K_c and player_in:
                     # Player calls
                     if player_chips >= current_bet_amount:
@@ -380,6 +413,7 @@ while running:
                         message = 'Both called. Proceed.'
                         last_computer_action = f'Computer called {current_bet_amount}'
                         log_action(f'Computer called {current_bet_amount}')
+                        play_sound('call')
                 elif event.key == pygame.K_r and player_in:
                     # Player raises
                     if player_chips >= current_bet_amount:
@@ -395,6 +429,7 @@ while running:
                             message = 'Computer folds! You win the pot.'
                             last_computer_action = 'Computer folded'
                             log_action('Computer folded')
+                            play_sound('fold')
                         else:
                             computer_chips -= ai_amount
                             players[1]['chips'] = computer_chips
@@ -403,6 +438,7 @@ while running:
                             message = f'Both raised. Proceed.'
                             last_computer_action = f'Computer raised {ai_amount}'
                             log_action(f'Computer raised {ai_amount}')
+                            play_sound('raise')
                 elif event.key == pygame.K_f and player_in:
                     # Player folds
                     player_in = False
@@ -410,6 +446,7 @@ while running:
                     message = 'You folded! Computer wins the pot.'
                     last_computer_action = ''
                     log_action('You folded')
+                    play_sound('fold')
             elif game_phase == 'draw' and player_in:
                 # 1-5 to select cards
                 if event.key in [pygame.K_1, pygame.K_2, pygame.K_3, pygame.K_4, pygame.K_5]:
@@ -457,6 +494,7 @@ while running:
                             comp_discards += 1
                     if comp_discards:
                         log_action(f'Computer drew {comp_discards} card(s)')
+                    play_sound('draw')
                     game_phase = 'bet2'
                     message = 'Second betting round: B=Bet, C=Call, R=Raise, F=Fold'
             elif game_phase == 'showdown':
@@ -465,18 +503,22 @@ while running:
                     if player_in and not computer_in:
                         player_chips += pot
                         players[0]['chips'] = player_chips
+                        play_sound('win')
                     elif computer_in and not player_in:
                         computer_chips += pot
                         players[1]['chips'] = computer_chips
+                        play_sound('lose')
                     else:
                         # Both in, determine winner
                         winner = determine_winner(player_hand, computer_hand)
                         if winner.startswith('Player'):
                             player_chips += pot
                             players[0]['chips'] = player_chips
+                            play_sound('win')
                         elif winner.startswith('Computer'):
                             computer_chips += pot
                             players[1]['chips'] = computer_chips
+                            play_sound('lose')
                         else:
                             # Tie
                             player_chips += pot // 2
@@ -493,6 +535,7 @@ while running:
                             message = 'Game Over! You are out of chips. Press SPACE to restart.'
                         else:
                             message = 'Game Over! Computer is out of chips. Press SPACE to restart.'
+                        play_sound('gameover')
                     else:
                         new_hand()
 
@@ -607,9 +650,11 @@ while running:
         if winner.startswith('Player'):
             hand_result = 'You win this hand!'
             result_color = (0,255,0)
+            play_sound('win')
         elif winner.startswith('Computer'):
             hand_result = 'Computer wins this hand!'
             result_color = (255,0,0)
+            play_sound('lose')
         else:
             hand_result = 'It’s a tie!'
             result_color = (255,255,0)

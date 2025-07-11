@@ -22,6 +22,7 @@ A collection of **15 classic arcade games** built with [Pygame](https://www.pyga
 
 - ✅ **15 Complete Games** - All fully playable
 - 🎨 **Modern UI** - Clean, responsive interfaces
+- 💵 **Casino-Style Betting in Blackjack** - Chip-based betting, bankroll management, and polished casino look
 - 🔊 **Sound Effects** - Immersive audio experience
 - 🎯 **Score Systems** - Track your progress
 - 🎮 **Easy Controls** - Intuitive gameplay
@@ -124,7 +125,16 @@ python snake/main.py
 - **Controls**: 
   - `H` - Hit (draw card)
   - `S` - Stay (end turn)
+  - Mouse: Click chips to bet, click buttons to play
 - **Scoring**: Closest to 21 wins
+- **Features**:
+  - Modern, casino-style UI with clear layout and no overlaps
+  - **Chip-based betting system**: Click chips to place your bet before each hand
+  - **Bankroll management**: Start with $1000, win or lose based on your bets
+  - **Dynamic status messages**: See your bet, bankroll, and results after each hand
+  - **Responsive buttons**: HIT, STAND, DEAL, and NEW GAME
+  - Keyboard and mouse support for all actions
+  - Clean separation of dealer/player areas and status
 
 ### 🏓 Breakout
 - **Objective**: Break all bricks with the ball

@@ -32,6 +32,7 @@ A collection of **15 classic arcade games** built with [Pygame](https://www.pyga
 - 🎯 **Enhanced Gameplay** - Improved mechanics and variety
 - 🤖 **AI Opponents** - Computer-controlled opponents
 - 🎵 **Generated Audio** - Programmatically created sound effects
+- 🧩 **Enhanced Tetris** - Modern Tetris with ghost piece, hold, wall kicks, and advanced scoring
 
 ## 🎮 Games Included
 
@@ -48,7 +49,7 @@ A collection of **15 classic arcade games** built with [Pygame](https://www.pyga
 | ✂️ **Rock Paper Scissors** | Casual | R/P/S Keys | Beat the computer |
 | 🎰 **Slot Machine** | Casino | Mouse Click | Spin to win |
 | 👾 **Space Invaders** | Arcade | Arrow Keys + Space | Shoot alien invaders |
-| 🧩 **Tetris** | Puzzle | Arrow Keys | Stack falling blocks |
+| 🧩 **Tetris (Enhanced)** | Puzzle | Arrow Keys + Space + H + P | Modern Tetris with ghost piece, hold, wall kicks |
 | ❌ **Tic Tac Toe** | Strategy | Mouse Click | Classic X's and O's |
 | 🚀 **Torpedo Attack** | Arcade | Any Key | Sink enemy ships |
 | 🐍 **Snake** | Arcade | Arrow Keys | Eat food to grow longer |
@@ -230,13 +231,30 @@ python snake/main.py
 - **Scoring**: Points for each alien destroyed
 - **Game Over**: Alien touches player
 
-### 🧩 Tetris
-- **Objective**: Complete horizontal lines
+### 🧩 Tetris (Enhanced)
+- **Objective**: Complete horizontal lines to clear them and score points
 - **Controls**:
-  - Left/Right arrows to move
-  - Up arrow to rotate
-  - Down arrow to drop faster
-- **Scoring**: Points for completed lines
+  - **Arrow Keys**: Move pieces left/right, rotate (up), soft drop (down)
+  - **Spacebar**: Hard drop (instant drop)
+  - **H**: Hold piece (store for later use)
+  - **P**: Pause/Resume game
+- **Scoring System**:
+  - **1 line**: 100 × level
+  - **2 lines**: 300 × level  
+  - **3 lines**: 500 × level
+  - **4 lines**: 800 × level
+  - **Combo bonus**: 50 points per consecutive line clear
+  - **Hard drop**: 2 points per cell dropped
+- **Features**:
+  - **Ghost piece**: Shows where piece will land
+  - **Hold piece**: Store one piece for later use (once per piece)
+  - **Next piece preview**: See upcoming piece
+  - **Wall kicks**: Advanced rotation system
+  - **Level progression**: Speed increases every 10 lines
+  - **High score tracking**: Persistent high scores
+  - **Modern UI**: Dark theme with side panel
+  - **Game states**: Menu, pause, game over screens
+  - **Enhanced graphics**: Grid lines, piece borders, better colors
 
 ### ❌ Tic Tac Toe
 - **Objective**: Get 3 in a row

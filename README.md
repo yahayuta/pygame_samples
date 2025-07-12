@@ -33,6 +33,7 @@ A collection of **15 classic arcade games** built with [Pygame](https://www.pyga
 - 🤖 **AI Opponents** - Computer-controlled opponents
 - 🎵 **Generated Audio** - Programmatically created sound effects
 - 🧩 **Enhanced Tetris** - Modern Tetris with ghost piece, hold, wall kicks, and advanced scoring
+- 🧩 **Tetris UI Optimized** - Compact layout, no side panel overlap, and correct brick stacking
 
 ## 🎮 Games Included
 
@@ -252,9 +253,10 @@ python snake/main.py
   - **Wall kicks**: Advanced rotation system
   - **Level progression**: Speed increases every 10 lines
   - **High score tracking**: Persistent high scores
-  - **Modern UI**: Dark theme with side panel
+  - **Modern UI**: Dark theme with compact side panel (no overlap)
   - **Game states**: Menu, pause, game over screens
   - **Enhanced graphics**: Grid lines, piece borders, better colors
+  - **Bugfix**: Bricks now stack all the way to the bottom row
 
 ### ❌ Tic Tac Toe
 - **Objective**: Get 3 in a row

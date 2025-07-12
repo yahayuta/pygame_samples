@@ -2,15 +2,17 @@ import pygame
 import random
 import json
 import os
+import math
 
 # Initialize Pygame
 pygame.init()
+pygame.mixer.init()
 
 # Constants
-WIDTH, HEIGHT = 400, 600
-GRID_SIZE = 22
+WIDTH, HEIGHT = 360, 600  # Reduce window width
+GRID_SIZE = 20            # Reduce grid cell size
 COLUMNS, ROWS = 10, 20
-GRID_X = 40
+GRID_X = 20               # Move grid left
 GRID_Y = 60
 WHITE, BLACK = (255, 255, 255), (0, 0, 0)
 GRAY = (128, 128, 128)
@@ -48,6 +50,42 @@ font = pygame.font.SysFont("Arial", 12)
 title_font = pygame.font.SysFont("Arial", 16, bold=True)
 large_font = pygame.font.SysFont("Arial", 24, bold=True)
 huge_font = pygame.font.SysFont("Arial", 32, bold=True)
+
+# Sound effects
+try:
+    move_sound = pygame.mixer.Sound("move.wav")
+    rotate_sound = pygame.mixer.Sound("rotate.wav")
+    drop_sound = pygame.mixer.Sound("drop.wav")
+    line_clear_sound = pygame.mixer.Sound("line_clear.wav")
+    game_over_sound = pygame.mixer.Sound("game_over.wav")
+    SOUND_ENABLED = True
+except:
+    # Create simple sound effects if files don't exist
+    SOUND_ENABLED = False
+    print("Sound files not found. Creating simple sound effects...")
+
+class Particle:
+    def __init__(self, x, y, color):
+        self.x = x
+        self.y = y
+        self.vx = random.uniform(-2, 2)
+        self.vy = random.uniform(-3, -1)
+        self.color = color
+        self.life = 30
+        self.max_life = 30
+        self.size = random.randint(2, 4)
+
+    def update(self):
+        self.x += self.vx
+        self.y += self.vy
+        self.vy += 0.1  # Gravity
+        self.life -= 1
+        return self.life > 0
+
+    def draw(self, screen):
+        alpha = int(255 * (self.life / self.max_life))
+        color = (*self.color, alpha)
+        pygame.draw.circle(screen, color, (int(self.x), int(self.y)), self.size)
 
 class Tetromino:
     def __init__(self, shape_idx=None):
@@ -98,6 +136,9 @@ class Tetris:
     def __init__(self):
         self.reset_game()
         self.high_score = self.load_high_score()
+        self.particles = []
+        self.line_clear_animation = 0
+        self.animation_timer = 0
 
     def reset_game(self):
         self.grid = [[BLACK] * COLUMNS for _ in range(ROWS)]
@@ -113,6 +154,9 @@ class Tetris:
         self.game_state = MENU
         self.drop_time = 0
         self.drop_speed = 500  # milliseconds
+        self.particles = []
+        self.line_clear_animation = 0
+        self.animation_timer = 0
 
     def load_high_score(self):
         try:
@@ -129,6 +173,30 @@ class Tetris:
         except:
             pass
 
+    def play_sound(self, sound_name):
+        if SOUND_ENABLED:
+            try:
+                if sound_name == "move":
+                    move_sound.play()
+                elif sound_name == "rotate":
+                    rotate_sound.play()
+                elif sound_name == "drop":
+                    drop_sound.play()
+                elif sound_name == "line_clear":
+                    line_clear_sound.play()
+                elif sound_name == "game_over":
+                    game_over_sound.play()
+            except:
+                pass
+
+    def create_line_clear_particles(self, y):
+        """Create particle effects for line clear"""
+        for x in range(COLUMNS):
+            for _ in range(3):  # 3 particles per cell
+                particle_x = x * GRID_SIZE + GRID_X + GRID_SIZE // 2
+                particle_y = y * GRID_SIZE + GRID_Y + GRID_SIZE // 2
+                self.particles.append(Particle(particle_x, particle_y, WHITE))
+
     def check_collision(self, dx=0, dy=0, shape=None):
         if shape is None:
             shape = self.tetromino.shape
@@ -139,12 +207,17 @@ class Tetris:
         for row_idx, row in enumerate(self.tetromino.shape):
             for col_idx, cell in enumerate(row):
                 if cell:
-                    self.grid[self.tetromino.y + row_idx][self.tetromino.x + col_idx] = self.tetromino.color
+                    y = self.tetromino.y + row_idx
+                    x = self.tetromino.x + col_idx
+                    # Only merge if within grid
+                    if 0 <= y < ROWS and 0 <= x < COLUMNS:
+                        self.grid[y][x] = self.tetromino.color
         self.tetromino = self.next_piece
         self.next_piece = Tetromino()
         self.can_hold = True
         if self.check_collision():
             self.game_state = GAME_OVER
+            self.play_sound("game_over")
             if self.score > self.high_score:
                 self.high_score = self.score
                 self.save_high_score()
@@ -156,6 +229,17 @@ class Tetris:
                 lines_to_clear.append(y)
         
         if lines_to_clear:
+            # Create particle effects for cleared lines
+            for y in lines_to_clear:
+                self.create_line_clear_particles(y)
+            
+            # Start line clear animation
+            self.line_clear_animation = 1
+            self.animation_timer = 10
+            
+            # Play sound
+            self.play_sound("line_clear")
+            
             # Remove cleared lines
             for y in reversed(lines_to_clear):
                 del self.grid[y]
@@ -180,6 +264,8 @@ class Tetris:
         if not self.check_collision(dx, dy):
             self.tetromino.x += dx
             self.tetromino.y += dy
+            if dx != 0:  # Only play sound for horizontal movement
+                self.play_sound("move")
         elif dy > 0:
             self.merge_tetromino()
             self.clear_lines()
@@ -200,10 +286,13 @@ class Tetris:
                 if not self.check_collision(dx, dy):
                     self.tetromino.x += dx
                     self.tetromino.y += dy
+                    self.play_sound("rotate")
                     return
             
             # If no wall kick works, revert rotation
             self.tetromino.shape = old_shape
+        else:
+            self.play_sound("rotate")
 
     def hold_piece(self):
         if not self.can_hold:
@@ -220,13 +309,17 @@ class Tetris:
             self.held_piece = Tetromino(current_shape_idx)
         
         self.can_hold = False
+        self.play_sound("move")
 
     def hard_drop(self):
+        drop_distance = 0
         while not self.check_collision(0, 1):
             self.tetromino.y += 1
+            drop_distance += 1
             self.score += 2  # Bonus points for hard drop
         self.merge_tetromino()
         self.clear_lines()
+        self.play_sound("drop")
 
     def draw_grid(self):
         # Draw background
@@ -248,13 +341,20 @@ class Tetris:
                            (GRID_X, GRID_Y + y * GRID_SIZE), 
                            (GRID_X + COLUMNS * GRID_SIZE, GRID_Y + y * GRID_SIZE))
         
-        # Draw placed pieces with borders
+        # Draw placed pieces with borders and line clear animation
         for y, row in enumerate(self.grid):
             for x, color in enumerate(row):
                 if color != BLACK:
                     piece_rect = (x * GRID_SIZE + GRID_X, y * GRID_SIZE + GRID_Y, 
                                 GRID_SIZE, GRID_SIZE)
-                    pygame.draw.rect(screen, color, piece_rect)
+                    
+                    # Line clear animation effect
+                    if self.line_clear_animation > 0:
+                        flash_color = WHITE if self.animation_timer % 4 < 2 else color
+                        pygame.draw.rect(screen, flash_color, piece_rect)
+                    else:
+                        pygame.draw.rect(screen, color, piece_rect)
+                    
                     pygame.draw.rect(screen, BLACK, piece_rect, 1)
 
     def draw_ghost_piece(self):
@@ -270,11 +370,17 @@ class Tetris:
                         pygame.draw.rect(screen, (*self.tetromino.color, 80), ghost_rect)
                         pygame.draw.rect(screen, self.tetromino.color, ghost_rect, 2)
 
+    def draw_particles(self):
+        # Update and draw particles
+        self.particles = [p for p in self.particles if p.update()]
+        for particle in self.particles:
+            particle.draw(screen)
+
     def draw_side_panel(self):
-        panel_x = GRID_X + COLUMNS * GRID_SIZE + 20
+        panel_x = GRID_X + COLUMNS * GRID_SIZE + 10  # Move side panel closer
         
         # Draw side panel background
-        panel_rect = (panel_x - 10, 40, 150, HEIGHT - 80)
+        panel_rect = (panel_x - 5, 40, 100, HEIGHT - 80)  # Reduce panel width
         pygame.draw.rect(screen, DARK_GRAY, panel_rect)
         pygame.draw.rect(screen, GRAY, panel_rect, 2)
         
@@ -429,6 +535,13 @@ class Tetris:
         resume_rect = resume_text.get_rect(center=(WIDTH // 2, HEIGHT // 2 + 60))
         screen.blit(resume_text, resume_rect)
 
+    def update_animations(self):
+        # Update line clear animation
+        if self.line_clear_animation > 0:
+            self.animation_timer -= 1
+            if self.animation_timer <= 0:
+                self.line_clear_animation = 0
+
     def run(self):
         while self.running:
             # Clear screen with dark background
@@ -441,15 +554,18 @@ class Tetris:
                 self.draw_ghost_piece()
                 self.tetromino.draw()
                 self.draw_side_panel()
+                self.draw_particles()
             elif self.game_state == PAUSED:
                 self.draw_grid()
                 self.draw_ghost_piece()
                 self.tetromino.draw()
                 self.draw_side_panel()
+                self.draw_particles()
                 self.draw_pause_screen()
             elif self.game_state == GAME_OVER:
                 self.draw_grid()
                 self.draw_side_panel()
+                self.draw_particles()
                 self.draw_game_over()
             
             pygame.display.flip()
@@ -490,6 +606,9 @@ class Tetris:
                 if self.drop_time > self.drop_speed:
                     self.move_tetromino(0, 1)
                     self.drop_time = 0
+
+            # Update animations
+            self.update_animations()
 
             clock.tick(60)
 

@@ -201,8 +201,26 @@ python snake/main.py
 
 ### 🎰 Slot Machine
 - **Objective**: Match symbols to win
-- **Controls**: Click spin button
-- **Scoring**: Points for matching combinations
+- **Controls**:
+  - Mouse click: Spin
+  - `P`: Show/hide prize list (paytable)
+- **Features**:
+  - Modern, visually appealing slot machine UI with gold frame, lever, and glass reflection
+  - Result message is shown above the machine after each spin, never overlapping the reels
+  - **Prize List Board (Paytable)**: Press `P` to view all winning combinations and their payouts, including symbol images and special features
+  - **Prizes:**
+    - Three Sevens: JACKPOT (progressive)
+    - Three Cherries: 50x bet + 10 Free Spins
+    - Three Bells: 10x bet + Bonus Round
+    - Three Plums, Watermelons, etc.: Standard payouts
+    - Two/One Sevens, Cherries, etc.: Smaller payouts
+  - **Special Features:**
+    - Progressive jackpot
+    - Free spins
+    - Bonus rounds with multipliers
+    - Win animations and sound effects
+  - Clean, centered layout with no UI overlaps
+  - Bet controls, auto play, and statistics
 
 ### 👾 Space Invaders
 - **Objective**: Shoot all alien invaders

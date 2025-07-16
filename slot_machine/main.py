@@ -495,13 +495,20 @@ def draw_ui():
     top_bar = pygame.Surface((WIDTH, TOP_BAR_HEIGHT))
     top_bar.fill((25, 25, 40))
     screen.blit(top_bar, (0, 0))
-    # CREDITS (left)
-    draw_led_display(f"CREDITS: {credits:06d}", 32, TOP_BAR_HEIGHT//2 - 18, GOLD, 26)
-    # FREE SPINS (center, smaller font)
+    
+    # CREDITS (left) - adjusted position to avoid overlap
+    draw_led_display(f"CREDITS: {credits:06d}", 24, TOP_BAR_HEIGHT//2 - 18, GOLD, 24)
+    
+    # FREE SPINS (center, smaller font) - only show if active
     if free_spins > 0:
-        draw_led_display(f"FREE SPINS: {free_spins:02d}", WIDTH//2 - 80, TOP_BAR_HEIGHT//2 - 16, GREEN, 20)
-    # JACKPOT (right)
-    draw_led_display(f"JACKPOT: {progressive_jackpot:06d}", WIDTH - 320, TOP_BAR_HEIGHT//2 - 18, PURPLE, 26)
+        draw_led_display(f"FREE SPINS: {free_spins:02d}", WIDTH//2 - 70, TOP_BAR_HEIGHT//2 - 16, GREEN, 18)
+    
+    # JACKPOT (right) - adjusted position to avoid overlap
+    jackpot_text = f"JACKPOT: {progressive_jackpot:06d}"
+    jackpot_width = len(jackpot_text) * 12  # Approximate width
+    jackpot_x = WIDTH - jackpot_width - 24
+    draw_led_display(jackpot_text, jackpot_x, TOP_BAR_HEIGHT//2 - 18, PURPLE, 24)
+    
     # Draw a line below top bar
     pygame.draw.line(screen, (80, 80, 120), (0, TOP_BAR_HEIGHT), (WIDTH, TOP_BAR_HEIGHT), 3)
 
@@ -509,11 +516,16 @@ def draw_ui():
     bottom_bar = pygame.Surface((WIDTH, BOTTOM_BAR_HEIGHT))
     bottom_bar.fill((25, 25, 40))
     screen.blit(bottom_bar, (0, HEIGHT - BOTTOM_BAR_HEIGHT))
-    controls_text = small_font.render(
-        "B: Bet 1   N: Bet 10   M: Bet Max   A: Auto Play   P: Paytable   S: Stats   SPACE: Spin",
-        True, WHITE)
-    screen.blit(controls_text, (WIDTH//2 - controls_text.get_width()//2, HEIGHT - BOTTOM_BAR_HEIGHT + 18))
+    
+    # Split controls text to avoid overlap
+    controls_text1 = small_font.render("B: Bet 1   N: Bet 10   M: Bet Max   A: Auto Play", True, WHITE)
+    controls_text2 = small_font.render("P: Paytable   S: Stats   SPACE: Spin", True, WHITE)
+    
+    screen.blit(controls_text1, (WIDTH//2 - controls_text1.get_width()//2, HEIGHT - BOTTOM_BAR_HEIGHT + 12))
+    screen.blit(controls_text2, (WIDTH//2 - controls_text2.get_width()//2, HEIGHT - BOTTOM_BAR_HEIGHT + 32))
+    
     pygame.draw.line(screen, (80, 80, 120), (0, HEIGHT - BOTTOM_BAR_HEIGHT), (WIDTH, HEIGHT - BOTTOM_BAR_HEIGHT), 3)
+    
     if auto_play:
         auto_text = font.render(f"AUTO: {auto_play_count}", True, GREEN)
         screen.blit(auto_text, (WIDTH - 180, HEIGHT - BOTTOM_BAR_HEIGHT - 30))
@@ -551,58 +563,111 @@ def draw_paytable():
     screen.blit(overlay, (0, 0))
     
     # Draw paytable box with gradient effect
-    paytable_rect = pygame.Rect(WIDTH//2 - 300, HEIGHT//2 - 250, 600, 500)
+    paytable_rect = pygame.Rect(WIDTH//2 - 320, HEIGHT//2 - 280, 640, 560)
     
     # Create gradient background
-    gradient_surface = pygame.Surface((600, 500))
-    for y in range(500):
+    gradient_surface = pygame.Surface((640, 560))
+    for y in range(560):
         alpha = 200 - int(y * 0.3)
         color = (50, 50, 80, alpha)
-        pygame.draw.line(gradient_surface, color, (0, y), (600, y))
-    screen.blit(gradient_surface, (WIDTH//2 - 300, HEIGHT//2 - 250))
+        pygame.draw.line(gradient_surface, color, (0, y), (640, y))
+    screen.blit(gradient_surface, (WIDTH//2 - 320, HEIGHT//2 - 280))
     
     pygame.draw.rect(screen, GOLD, paytable_rect, 3)
     
-    # Draw title with glow effect
-    title_text = large_font.render("PRIZE LIST", True, GOLD)
-    title_glow = large_font.render("PRIZE LIST", True, (255, 255, 0))
-    screen.blit(title_glow, (WIDTH//2 - title_text.get_width()//2 + 2, HEIGHT//2 - 230 + 2))
-    screen.blit(title_text, (WIDTH//2 - title_text.get_width()//2, HEIGHT//2 - 230))
+    # Draw title with minimum font size
+    title_text = small_font.render("PRIZE LIST", True, GOLD)
+    title_glow = small_font.render("PRIZE LIST", True, (255, 255, 0))
+    screen.blit(title_glow, (WIDTH//2 - title_text.get_width()//2 + 2, HEIGHT//2 - 260 + 2))
+    screen.blit(title_text, (WIDTH//2 - title_text.get_width()//2, HEIGHT//2 - 260))
     
-    # Draw paytable entries with better formatting
-    y_offset = HEIGHT//2 - 180
+    # Draw paytable entries with minimum formatting and organization
+    y_offset = HEIGHT//2 - 200
+    section_spacing = 25  # Minimum spacing
+    
+    # JACKPOT SECTION
+    section_title = pygame.font.SysFont("Arial", 16).render("JACKPOT COMBINATIONS", True, PURPLE)
+    screen.blit(section_title, (WIDTH//2 - section_title.get_width()//2, y_offset))
+    y_offset += 20
+    
     entries = [
         ("Three Sevens (JACKPOT)", f"{progressive_jackpot} Credits", PURPLE),
+    ]
+    
+    for symbol, payout, color in entries:
+        symbol_text = pygame.font.SysFont("Arial", 16).render(symbol, True, color)
+        payout_text = pygame.font.SysFont("Arial", 16).render(payout, True, WHITE)
+        screen.blit(symbol_text, (WIDTH//2 - 280, y_offset))
+        screen.blit(payout_text, (WIDTH//2 + 80, y_offset))
+        y_offset += 20
+    
+    y_offset += section_spacing
+    
+    # HIGH VALUE SECTION
+    section_title = pygame.font.SysFont("Arial", 16).render("HIGH VALUE COMBINATIONS", True, GOLD)
+    screen.blit(section_title, (WIDTH//2 - section_title.get_width()//2, y_offset))
+    y_offset += 20
+    
+    entries = [
         ("Three Cherries", "50x bet + 10 Free Spins", RED),
         ("Three Bells", "10x bet + Bonus Round", BLUE),
         ("Three Plums", "25x bet", (255, 0, 255)),
         ("Three Watermelons", "15x bet", GREEN),
-        ("", "", WHITE),
+    ]
+    
+    for symbol, payout, color in entries:
+        symbol_text = pygame.font.SysFont("Arial", 16).render(symbol, True, color)
+        payout_text = pygame.font.SysFont("Arial", 16).render(payout, True, WHITE)
+        screen.blit(symbol_text, (WIDTH//2 - 280, y_offset))
+        screen.blit(payout_text, (WIDTH//2 + 80, y_offset))
+        y_offset += 20
+    
+    y_offset += section_spacing
+    
+    # MEDIUM VALUE SECTION
+    section_title = pygame.font.SysFont("Arial", 16).render("MEDIUM VALUE COMBINATIONS", True, GOLD)
+    screen.blit(section_title, (WIDTH//2 - section_title.get_width()//2, y_offset))
+    y_offset += 20
+    
+    entries = [
         ("Two Sevens", "20x bet", GOLD),
         ("Two Cherries", "10x bet", RED),
         ("Two Plums", "5x bet", (255, 0, 255)),
         ("Two Watermelons", "3x bet", GREEN),
         ("Two Bells", "2x bet", BLUE),
-        ("", "", WHITE),
-        ("One Seven", "5x bet", GOLD),
-        ("One Cherry", "2x bet", RED)
     ]
     
     for symbol, payout, color in entries:
-        if symbol == "":
-            y_offset += 20
-        else:
-            symbol_text = font.render(symbol, True, color)
-            payout_text = font.render(payout, True, WHITE)
-            screen.blit(symbol_text, (WIDTH//2 - 250, y_offset))
-            screen.blit(payout_text, (WIDTH//2 + 50, y_offset))
-            y_offset += 30
+        symbol_text = pygame.font.SysFont("Arial", 16).render(symbol, True, color)
+        payout_text = pygame.font.SysFont("Arial", 16).render(payout, True, WHITE)
+        screen.blit(symbol_text, (WIDTH//2 - 280, y_offset))
+        screen.blit(payout_text, (WIDTH//2 + 80, y_offset))
+        y_offset += 20
     
-    # Draw close instruction with animation
-    close_text = font.render("Press P to close paytable", True, GOLD)
-    close_glow = font.render("Press P to close paytable", True, (255, 255, 0))
-    screen.blit(close_glow, (WIDTH//2 - close_text.get_width()//2 + 1, HEIGHT//2 + 200 + 1))
-    screen.blit(close_text, (WIDTH//2 - close_text.get_width()//2, HEIGHT//2 + 200))
+    y_offset += section_spacing
+    
+    # LOW VALUE SECTION
+    section_title = pygame.font.SysFont("Arial", 16).render("LOW VALUE COMBINATIONS", True, GOLD)
+    screen.blit(section_title, (WIDTH//2 - section_title.get_width()//2, y_offset))
+    y_offset += 20
+    
+    entries = [
+        ("One Seven", "5x bet", GOLD),
+        ("One Cherry", "2x bet", RED),
+    ]
+    
+    for symbol, payout, color in entries:
+        symbol_text = pygame.font.SysFont("Arial", 16).render(symbol, True, color)
+        payout_text = pygame.font.SysFont("Arial", 16).render(payout, True, WHITE)
+        screen.blit(symbol_text, (WIDTH//2 - 280, y_offset))
+        screen.blit(payout_text, (WIDTH//2 + 80, y_offset))
+        y_offset += 20
+    
+    # Draw close instruction with minimum font size
+    close_text = pygame.font.SysFont("Arial", 16).render("Press P to close paytable", True, GOLD)
+    close_glow = pygame.font.SysFont("Arial", 16).render("Press P to close paytable", True, (255, 255, 0))
+    screen.blit(close_glow, (WIDTH//2 - close_text.get_width()//2 + 1, HEIGHT//2 + 240 + 1))
+    screen.blit(close_text, (WIDTH//2 - close_text.get_width()//2, HEIGHT//2 + 240))
 
 def draw_stats():
     """Draw statistics overlay"""
@@ -612,38 +677,75 @@ def draw_stats():
     overlay.fill((0, 0, 0))
     screen.blit(overlay, (0, 0))
     
-    # Draw stats box
-    stats_rect = pygame.Rect(WIDTH//2 - 300, HEIGHT//2 - 250, 600, 500)
+    # Draw stats box with better sizing
+    stats_rect = pygame.Rect(WIDTH//2 - 320, HEIGHT//2 - 280, 640, 560)
     pygame.draw.rect(screen, (50, 50, 80), stats_rect)
     pygame.draw.rect(screen, GOLD, stats_rect, 3)
     
-    # Draw title
-    title_text = large_font.render("STATISTICS", True, GOLD)
-    screen.blit(title_text, (WIDTH//2 - title_text.get_width()//2, HEIGHT//2 - 230))
+    # Draw title with minimum font size
+    title_text = small_font.render("STATISTICS", True, GOLD)
+    screen.blit(title_text, (WIDTH//2 - title_text.get_width()//2, HEIGHT//2 - 260))
     
-    # Draw stats
-    y_offset = HEIGHT//2 - 180
+    # Draw stats with minimum organization
+    y_offset = HEIGHT//2 - 200
+    section_spacing = 25  # Minimum spacing
+    
+    # GAME STATS SECTION
+    section_title = pygame.font.SysFont("Arial", 16).render("GAME STATISTICS", True, GOLD)
+    screen.blit(section_title, (WIDTH//2 - section_title.get_width()//2, y_offset))
+    y_offset += 20
+    
     stat_entries = [
         f"Total Spins: {stats['total_spins']}",
         f"Total Wins: {stats['total_wins']}",
         f"Total Credits Won: {stats['total_credits_won']}",
         f"Biggest Win: {stats['biggest_win']}",
+    ]
+    
+    for entry in stat_entries:
+        entry_text = pygame.font.SysFont("Arial", 16).render(entry, True, WHITE)
+        screen.blit(entry_text, (WIDTH//2 - 280, y_offset))
+        y_offset += 20
+    
+    y_offset += section_spacing
+    
+    # SPECIAL EVENTS SECTION
+    section_title = pygame.font.SysFont("Arial", 16).render("SPECIAL EVENTS", True, GOLD)
+    screen.blit(section_title, (WIDTH//2 - section_title.get_width()//2, y_offset))
+    y_offset += 20
+    
+    stat_entries = [
         f"Jackpots Hit: {stats['jackpots_hit']}",
         f"Free Spins Triggered: {stats['free_spins_triggered']}",
         f"Bonus Rounds: {stats['bonus_rounds_triggered']}",
         f"Highest Multiplier: {stats['highest_multiplier']}x",
-        f"Longest Win Streak: {stats['longest_winning_streak']}",
-        f"Current Streak: {stats['current_streak']}"
     ]
     
     for entry in stat_entries:
-        entry_text = font.render(entry, True, WHITE)
-        screen.blit(entry_text, (WIDTH//2 - 250, y_offset))
-        y_offset += 30
+        entry_text = pygame.font.SysFont("Arial", 16).render(entry, True, WHITE)
+        screen.blit(entry_text, (WIDTH//2 - 280, y_offset))
+        y_offset += 20
     
-    # Draw close instruction
-    close_text = font.render("Press S to close stats", True, GOLD)
-    screen.blit(close_text, (WIDTH//2 - close_text.get_width()//2, HEIGHT//2 + 200))
+    y_offset += section_spacing
+    
+    # STREAKS SECTION
+    section_title = pygame.font.SysFont("Arial", 16).render("WINNING STREAKS", True, GOLD)
+    screen.blit(section_title, (WIDTH//2 - section_title.get_width()//2, y_offset))
+    y_offset += 20
+    
+    stat_entries = [
+        f"Longest Win Streak: {stats['longest_winning_streak']}",
+        f"Current Streak: {stats['current_streak']}",
+    ]
+    
+    for entry in stat_entries:
+        entry_text = pygame.font.SysFont("Arial", 16).render(entry, True, WHITE)
+        screen.blit(entry_text, (WIDTH//2 - 280, y_offset))
+        y_offset += 20
+    
+    # Draw close instruction with minimum font size
+    close_text = pygame.font.SysFont("Arial", 16).render("Press S to close stats", True, GOLD)
+    screen.blit(close_text, (WIDTH//2 - close_text.get_width()//2, HEIGHT//2 + 240))
 
 def change_bet(amount):
     """Change the current bet amount with sound feedback"""
@@ -773,54 +875,94 @@ def draw_paytable_board():
     board_y = TOP_BAR_HEIGHT + 10
     board_width = PAYTABLE_WIDTH
     board_height = HEIGHT - TOP_BAR_HEIGHT - BOTTOM_BAR_HEIGHT - 20
-    # Background
+    
+    # Background with better styling
     board_bg = pygame.Surface((board_width, board_height), pygame.SRCALPHA)
-    board_bg.fill((30, 30, 30, 230))
-    pygame.draw.rect(board_bg, (255, 215, 0), (0, 0, board_width, board_height), 4, border_radius=22)
+    # Create gradient background
+    for y in range(board_height):
+        alpha = 230 - int(y * 0.1)
+        color = (30, 30, 30, alpha)
+        pygame.draw.line(board_bg, color, (0, y), (board_width, y))
+    
+    # Add border with rounded corners
+    pygame.draw.rect(board_bg, (255, 215, 0), (0, 0, board_width, board_height), 4, border_radius=12)
     screen.blit(board_bg, (board_x, board_y))
-    # Title
-    title_font = pygame.font.SysFont("Arial", 26, bold=True)
+    
+    # Title with minimum font size
+    title_font = pygame.font.SysFont("Arial", 20, bold=True)
     title = title_font.render("PRIZE LIST", True, (255, 215, 0))
-    screen.blit(title, (board_x + board_width//2 - title.get_width()//2, board_y + 12))
-    # List entries
-    y = board_y + 50
-    entry_font = pygame.font.SysFont("Arial", 20, bold=True)
-    small_font2 = pygame.font.SysFont("Arial", 16)
-    symbol_y_pad = 6
-    # Define paytable entries (symbol indices, description, payout, color)
+    title_rect = title.get_rect(centerx=board_x + board_width//2, y=board_y + 10)
+    screen.blit(title, title_rect)
+    
+    # Add a separator line below title
+    pygame.draw.line(screen, (255, 215, 0), 
+                    (board_x + 20, board_y + 35), 
+                    (board_x + board_width - 20, board_y + 35), 2)
+    
+    # List entries with minimum font sizes
+    y = board_y + 45  # Start below title and separator
+    entry_font = pygame.font.SysFont("Arial", 14, bold=True)
+    small_font2 = pygame.font.SysFont("Arial", 12)
+    bonus_font = pygame.font.SysFont("Arial", 10)
+    symbol_y_pad = 4
+    symbol_size = 20  # Minimum symbol size
+    
+    # Define paytable entries with better organization
     entries = [
-        ((0,0,0), "Three Sevens (JACKPOT)", f"{progressive_jackpot}", (255,0,255)),
-        ((1,1,1), "Three Cherries (+10 FS)", f"50x", (255,0,0)),
-        ((4,4,4), "Three Bells (Bonus)", f"10x", (0,100,255)),
-        ((2,2,2), "Three Plums", "25x", (255,0,255)),
-        ((3,3,3), "Three Watermelons", "15x", (0,200,0)),
-        (None, "", "", (0,0,0)),
-        ((0,0,-1), "Two Sevens", "20x", (255,215,0)),
-        ((1,1,-1), "Two Cherries", "10x", (255,0,0)),
-        ((2,2,-1), "Two Plums", "5x", (255,0,255)),
-        ((3,3,-1), "Two Watermelons", "3x", (0,200,0)),
-        ((4,4,-1), "Two Bells", "2x", (0,100,255)),
-        (None, "", "", (0,0,0)),
-        ((0,-1,-1), "One Seven", "5x", (255,215,0)),
-        ((1,-1,-1), "One Cherry", "2x", (255,0,0)),
+        # JACKPOT SECTION
+        ((0,0,0), "Three Sevens", f"{progressive_jackpot}", (255,0,255), "JACKPOT"),
+        # HIGH VALUE SECTION
+        ((1,1,1), "Three Cherries", "50x", (255,0,0), "+10 FS"),
+        ((4,4,4), "Three Bells", "10x", (0,100,255), "Bonus"),
+        ((2,2,2), "Three Plums", "25x", (255,0,255), ""),
+        ((3,3,3), "Three Watermelons", "15x", (0,200,0), ""),
+        # SPACER
+        (None, "", "", (0,0,0), ""),
+        # MEDIUM VALUE SECTION
+        ((0,0,-1), "Two Sevens", "20x", (255,215,0), ""),
+        ((1,1,-1), "Two Cherries", "10x", (255,0,0), ""),
+        ((2,2,-1), "Two Plums", "5x", (255,0,255), ""),
+        ((3,3,-1), "Two Watermelons", "3x", (0,200,0), ""),
+        ((4,4,-1), "Two Bells", "2x", (0,100,255), ""),
+        # SPACER
+        (None, "", "", (0,0,0), ""),
+        # LOW VALUE SECTION
+        ((0,-1,-1), "One Seven", "5x", (255,215,0), ""),
+        ((1,-1,-1), "One Cherry", "2x", (255,0,0), ""),
     ]
-    for combo, desc, payout, color in entries:
+    
+    for combo, desc, payout, color, bonus in entries:
         if desc == "":
-            y += 12
+            y += 12  # Minimum space between sections
             continue
-        # Draw symbol(s)
+            
+        # Draw symbol(s) with better positioning
         if combo:
+            symbol_x = board_x + 12
             for i, idx in enumerate(combo):
                 if idx != -1:
                     img = reel_images[idx]
-                    img_s = pygame.transform.smoothscale(img, (28,28))
-                    screen.blit(img_s, (board_x + 16 + i*32, y + symbol_y_pad))
-        # Draw description and payout
+                    img_s = pygame.transform.smoothscale(img, (symbol_size, symbol_size))
+                    screen.blit(img_s, (symbol_x + i*(symbol_size + 3), y + symbol_y_pad))
+        
+        # Draw description with minimum font and better positioning
         desc_text = entry_font.render(desc, True, color)
-        screen.blit(desc_text, (board_x + 120, y))
+        desc_x = board_x + 95  # Moved closer to symbols
+        screen.blit(desc_text, (desc_x, y + 4))
+        
+        # Draw payout with better positioning
         payout_text = small_font2.render(payout, True, (0,255,0) if "x" in payout else (255,0,255))
-        screen.blit(payout_text, (board_x + board_width - payout_text.get_width() - 16, y + 6))
-        y += 36
+        payout_x = board_x + board_width - payout_text.get_width() - 12
+        screen.blit(payout_text, (payout_x, y + 6))
+        
+        # Draw bonus text if present with minimum font
+        if bonus:
+            bonus_text = bonus_font.render(bonus, True, (255, 255, 0))
+            bonus_x = board_x + 95
+            screen.blit(bonus_text, (bonus_x, y + 20))
+            y += 28  # Minimum space for entries with bonus text
+        else:
+            y += 24  # Minimum standard spacing
 
 # Define the game loop
 def game_loop():

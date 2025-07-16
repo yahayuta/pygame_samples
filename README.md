@@ -199,7 +199,15 @@ python snake/main.py
   - `R` - Rock
   - `P` - Paper  
   - `S` - Scissors
-- **Scoring**: Win/Loss/Draw tracking
+- **Scoring**: Win/Loss/Draw tracking with color-coded results
+- **Features**:
+  - **Enhanced Visual Design** - Color-coded results (Green for wins, Red for losses, Gold for draws)
+  - **Improved UI Layout** - Professional boxes and backgrounds for better organization
+  - **Clear Result Display** - Prominent "RESULT" header with organized choice display
+  - **Better Game Flow** - Results stay visible until you press any key to continue
+  - **Score Tracking** - Color-coded win/loss/draw counters with background
+  - **Modern Typography** - Multiple font sizes for better visual hierarchy
+  - **Responsive Design** - Clean, organized layout with proper spacing
 
 ### 🎰 Slot Machine
 - **Objective**: Match symbols to win
@@ -331,9 +339,18 @@ pygame_samples/
 - **Score Tracking** - Points for each food eaten
 - **Restart Functionality** - Press SPACE to restart
 
+### ✂️ **Enhanced Rock Paper Scissors - Major UI Upgrade!**
+- **Color-Coded Results** - Green for wins, Red for losses, Gold for draws
+- **Professional UI Design** - Modern boxes and backgrounds for better organization
+- **Improved Game Flow** - Results stay visible until you press any key to continue
+- **Enhanced Typography** - Multiple font sizes with better visual hierarchy
+- **Better Score Display** - Color-coded counters with background boxes
+- **Clear Result Layout** - Prominent "RESULT" header with organized choice display
+
 ### ✨ **New Features:**
 - **🟡 Enhanced Pac-Man** - Complete classic implementation with maze, power pellets, and ghost AI
 - **🐍 Snake Game** - Classic arcade game with wrap-around edges and progressive difficulty
+- **✂️ Enhanced Rock Paper Scissors** - Professional UI with color-coded results and improved game flow
 - **📖 On-Screen Instructions** - Every game now displays controls and objectives directly on screen
 - **🎮 Enhanced Gameplay** - Improved mechanics in Space Invaders, Poker, and Frogger
 - **🚀 Easy Launcher** - One-click game launcher for Windows users (now with 15 games!)

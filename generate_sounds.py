@@ -478,4 +478,10 @@ def main():
     print("- Pac-Man: eat.wav, power.wav, ghost_eaten.wav, death.wav")
 
 if __name__ == "__main__":
+    os.makedirs('asteroids/sound_files', exist_ok=True)
+    create_shoot_sound('asteroids/sound_files/shoot.wav')
+    create_explosion_sound('asteroids/sound_files/explosion.wav')
+    create_hit_sound('asteroids/sound_files/hit.wav')
+    create_game_over_sound('asteroids/sound_files/game_over.wav')
+    print('Asteroids sound effects generated.')
     main() 

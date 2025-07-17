@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)](https://github.com/yourusername/pygame_samples)
 
-A collection of **15 classic arcade games** built with [Pygame](https://www.pygame.org/). Perfect for learning game development and having fun! 🚀
+A collection of **16 classic arcade games** built with [Pygame](https://www.pygame.org/). Perfect for learning game development and having fun! 🚀
 
 ## 📋 Table of Contents
 
@@ -20,7 +20,7 @@ A collection of **15 classic arcade games** built with [Pygame](https://www.pyga
 
 ## 🎯 Features
 
-- ✅ **15 Complete Games** - All fully playable
+- ✅ **16 Complete Games** - All fully playable
 - 🎨 **Modern UI** - Clean, responsive interfaces
 - 💵 **Casino-Style Betting in Blackjack** - Chip-based betting, bankroll management, and polished casino look
 - 🔊 **Sound Effects** - Immersive audio experience
@@ -54,6 +54,7 @@ A collection of **15 classic arcade games** built with [Pygame](https://www.pyga
 | ❌ **Tic Tac Toe** | Strategy | Mouse Click | Classic X's and O's |
 | 🚀 **Torpedo Attack** | Arcade | Any Key | Sink enemy ships |
 | 🐍 **Snake** | Arcade | Arrow Keys | Eat food to grow longer |
+| 🚀 **Asteroids** | Arcade | Arrow Keys + Space | Destroy asteroids, avoid collisions |
 
 ## ⚡ Quick Start
 
@@ -284,6 +285,23 @@ python snake/main.py
 - **Game Over**: Hit yourself or walls
 - **Features**: Visible walls with collision detection, speed increases with score
 
+### 🚀 Asteroids
+- **Objective**: Destroy all asteroids and survive as long as possible
+- **Controls**:
+  - Arrow keys: Rotate and thrust
+  - Spacebar: Shoot
+- **Scoring**: Points for each asteroid destroyed
+- **Game Over**: Ship destroyed with no lives left
+- **Features**:
+  - Rotating, jagged asteroids with rocky textures
+  - Parallax, twinkling starfield background
+  - Particle effects for thrust, explosions, and asteroid fragments
+  - Ship trail and animated flame
+  - Glowing shield on respawn
+  - Score popups, screen shake, and flash feedback
+  - Glow effects for ship, bullets, and asteroids
+  - Modernized retro visuals and sound effects
+
 ## 📁 Project Structure
 
 ```
@@ -304,6 +322,7 @@ pygame_samples/
 │   ├── tictactoe/        # Tic Tac Toe
 │   ├── torpedo_attack/   # Torpedo Attack shooter
 │   └── snake/            # Snake arcade game
+│   └── asteroids/        # Asteroids arcade game
 ├── 🎵 Assets
 │   ├── cards/            # Card images
 │   ├── sound_files/      # Audio effects (generated)
@@ -353,7 +372,7 @@ pygame_samples/
 - **✂️ Enhanced Rock Paper Scissors** - Professional UI with color-coded results and improved game flow
 - **📖 On-Screen Instructions** - Every game now displays controls and objectives directly on screen
 - **🎮 Enhanced Gameplay** - Improved mechanics in Space Invaders, Poker, and Frogger
-- **🚀 Easy Launcher** - One-click game launcher for Windows users (now with 15 games!)
+- **🚀 Easy Launcher** - One-click game launcher for Windows users (now with 16 games!)
 - **📋 Better Documentation** - Comprehensive README with game details
 - **🤖 AI Opponents** - Computer-controlled opponents in Pong
 - **🎵 Sound Generation** - Programmatically created audio effects
@@ -366,14 +385,14 @@ pygame_samples/
 - **Frogger**: Removed duplicate code, cleaner implementation
 - **Pong**: Added computer AI opponent with smart ball tracking
 - **Torpedo Attack**: Added sound effects and slower ship speeds
-- **Batch Launcher**: Updated to include all 15 games with proper navigation
+- **Batch Launcher**: Updated to include all 16 games with proper navigation
 - **All Games**: Added on-screen instructions for instant learning
 
 ### 🎯 **User Experience:**
 - **Instant Learning** - No need to read external documentation
 - **Consistent Interface** - Same instruction format across all games
 - **Professional Polish** - Clean, modern game interfaces
-- **Easy Access** - Simple launcher for quick game selection (15 games!)
+- **Easy Access** - Simple launcher for quick game selection (16 games!)
 - **Single Player Options** - AI opponents for solo gameplay
 - **Immersive Audio** - Generated sound effects for all games
 - **Cross-Platform Compatibility** - Works on Windows, macOS, and Linux

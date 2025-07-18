@@ -27,13 +27,14 @@ echo  13. Tic Tac Toe
 echo  14. Torpedo Attack
 echo  15. Snake
 echo  16. Asteroids
+echo  17. Missile Command
 echo.
 echo  0.  Exit
 echo.
 echo  ========================================
 echo.
 
-set /p choice="Enter your choice (0-16): "
+set /p choice="Enter your choice (0-17): "
 
 if "%choice%"=="1" goto pacman
 if "%choice%"=="2" goto blackjack
@@ -51,6 +52,7 @@ if "%choice%"=="13" goto tictactoe
 if "%choice%"=="14" goto torpedo_attack
 if "%choice%"=="15" goto snake
 if "%choice%"=="16" goto asteroids
+if "%choice%"=="17" goto missile_command
 if "%choice%"=="0" goto exit
 goto menu
 
@@ -178,6 +180,14 @@ goto menu
 cls
 echo Starting Asteroids...
 cd asteroids
+python main.py
+cd ..
+goto menu
+
+:missile_command
+cls
+echo Starting Missile Command...
+cd missile_command
 python main.py
 cd ..
 goto menu

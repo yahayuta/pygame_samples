@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)](https://github.com/yourusername/pygame_samples)
 
-A collection of **16 classic arcade games** built with [Pygame](https://www.pygame.org/). Perfect for learning game development and having fun! 🚀
+A collection of **17 classic arcade games** built with [Pygame](https://www.pygame.org/). Perfect for learning game development and having fun! 🚀
 
 ## 📋 Table of Contents
 
@@ -55,6 +55,7 @@ A collection of **16 classic arcade games** built with [Pygame](https://www.pyga
 | 🚀 **Torpedo Attack** | Arcade | Any Key | Sink enemy ships |
 | 🐍 **Snake** | Arcade | Arrow Keys | Eat food to grow longer |
 | 🚀 **Asteroids** | Arcade | Arrow Keys + Space | Destroy asteroids, avoid collisions |
+| 🎯 **Missile Command** | Arcade | Mouse/Arrow Keys + Space | Defend cities from incoming missiles |
 
 ## ⚡ Quick Start
 
@@ -302,6 +303,29 @@ python snake/main.py
   - Glow effects for ship, bullets, and asteroids
   - Modernized retro visuals and sound effects
 
+### 🎯 Missile Command
+- **Objective**: Defend your cities from incoming missiles by launching counter-missiles
+- **Controls**:
+  - **Mouse**: Move crosshair and left-click to fire
+  - **Arrow Keys**: Move crosshair
+  - **Spacebar**: Fire missile
+  - **1, 2, 3**: Select missile base
+  - **R**: Restart game
+  - **Q**: Quit game
+- **Scoring**: 100 points per enemy missile destroyed
+- **Game Over**: All cities destroyed
+- **Features**:
+  - **Three Missile Bases**: Left, center, and right with unlimited ammo
+  - **Multiple Levels**: Progressive difficulty with faster missiles and more frequent spawns
+  - **Power-ups**: Big explosions, slow motion, and extra city protection
+  - **Sound Effects**: Launch, explosion, city destruction, and game over sounds
+  - **High Score System**: Persistent high score tracking
+  - **Enhanced Graphics**: Background stars, detailed city sprites, animated explosions
+  - **Main Menu**: Professional menu with instructions screen
+  - **Easy Mode**: Very slow enemy missiles for beginner-friendly gameplay
+  - **Visual Feedback**: Crosshair, base selection, power-up indicators
+  - **Retro Style**: Authentic Atari 2600 era aesthetics with modern polish
+
 ## 📁 Project Structure
 
 ```
@@ -323,6 +347,7 @@ pygame_samples/
 │   ├── torpedo_attack/   # Torpedo Attack shooter
 │   └── snake/            # Snake arcade game
 │   └── asteroids/        # Asteroids arcade game
+│   └── missile_command/  # Missile Command arcade game
 ├── 🎵 Assets
 │   ├── cards/            # Card images
 │   ├── sound_files/      # Audio effects (generated)

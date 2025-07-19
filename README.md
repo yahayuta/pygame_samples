@@ -194,6 +194,11 @@ python snake/main.py
 - **Objective**: Capture opponent's pieces
 - **Controls**: Mouse click to place piece
 - **Scoring**: Most pieces at end wins
+- **Features**:
+  - Modern UI: gradient board, anti-aliased grid, 3D discs with shadows/highlights
+  - Valid move highlighting for current player
+  - Animated piece flipping (smooth color morph)
+  - Modern rounded score/status panel with clear font
 
 ### ✂️ Rock Paper Scissors
 - **Objective**: Beat the computer

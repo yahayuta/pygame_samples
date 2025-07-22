@@ -396,6 +396,13 @@ pygame_samples/
 - **Better Score Display** - Color-coded counters with background boxes
 - **Clear Result Layout** - Prominent "RESULT" header with organized choice display
 
+### 🎨 **Breakout - Graphics & Visuals Update (July 2025)**
+- Added a background color gradient for a modern look.
+- Ball and paddle now have colored borders and a shine effect.
+- Bricks have a border and a simple shine/gradient on top.
+
+Enjoy the improved visuals! If you want further enhancements (animations, images, etc.), let me know.
+
 ### ✨ **New Features:**
 - **🟡 Enhanced Pac-Man** - Complete classic implementation with maze, power pellets, and ghost AI
 - **🐍 Snake Game** - Classic arcade game with wrap-around edges and progressive difficulty

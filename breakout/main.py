@@ -322,15 +322,44 @@ while running:
         paddle_x += paddle_speed
 
     # Draw everything
-    screen.fill((0, 0, 0))
-    pygame.draw.circle(screen, (255, 255, 255), (int(ball_x), int(ball_y)), ball_radius)
-    pygame.draw.rect(screen, (255, 255, 255), (int(paddle_x - paddle_width/2), int(paddle_y - paddle_height/2), paddle_width, paddle_height))
+    # --- Background Gradient ---
+    for y in range(screen_height):
+        color = (
+            int(10 + 30 * y / screen_height),
+            int(10 + 60 * y / screen_height),
+            int(40 + 120 * y / screen_height)
+        )
+        pygame.draw.line(screen, color, (0, y), (screen_width, y))
+
+    # --- Ball with Shine and Border ---
+    ball_center = (int(ball_x), int(ball_y))
+    pygame.draw.circle(screen, (255, 255, 255), ball_center, ball_radius)
+    pygame.draw.circle(screen, (0, 200, 255), ball_center, ball_radius, 3)  # Border
+    # Shine effect
+    shine_rect = pygame.Rect(ball_center[0] - ball_radius//2, ball_center[1] - ball_radius//2, ball_radius, ball_radius//2)
+    pygame.draw.ellipse(screen, (220, 255, 255), shine_rect)
+
+    # --- Paddle with Border ---
+    paddle_rect = pygame.Rect(int(paddle_x - paddle_width/2), int(paddle_y - paddle_height/2), paddle_width, paddle_height)
+    pygame.draw.rect(screen, (255, 255, 255), paddle_rect)
+    pygame.draw.rect(screen, (0, 200, 255), paddle_rect, 3)
+
+    # --- Bricks with Fade Animation (simple color effect) ---
     for brick in bricks:
         color = brick_colors.get(brick.get('type', BRICK_NORMAL), (200, 50, 50)) if isinstance(brick, dict) else (200, 50, 50)
-        pygame.draw.rect(screen, color, brick['rect'] if isinstance(brick, dict) else brick)
+        rect = brick['rect'] if isinstance(brick, dict) else brick
+        # Add a border and a slight gradient
+        pygame.draw.rect(screen, color, rect)
+        pygame.draw.rect(screen, (255, 255, 255), rect, 2)
+        # Simulate a shine on the top of the brick
+        shine = pygame.Rect(rect.x, rect.y, rect.width, rect.height//3)
+        pygame.draw.rect(screen, (min(color[0]+55,255), min(color[1]+55,255), min(color[2]+55,255)), shine)
+
     # Draw power-up
     if powerup_active and powerup_rect:
         pygame.draw.rect(screen, (0, 255, 0), powerup_rect)
+        pygame.draw.rect(screen, (255, 255, 255), powerup_rect, 2)
+
     # Draw combo bonus
     if combo_display_timer > 0:
         combo_display_timer -= 1

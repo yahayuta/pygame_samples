@@ -9,10 +9,20 @@ pygame.init()
 # Initialize Pygame mixer
 pygame.mixer.init()
 
-# Load sound file
+
+# Load sound files
 paddle_sound = pygame.mixer.Sound('sound_files/paddle.mp3')
 brick_sound = pygame.mixer.Sound('sound_files/brick.mp3')
 wall_sound = pygame.mixer.Sound('sound_files/wall.mp3')
+levelup_sound = pygame.mixer.Sound('sound_files/levelup.wav')
+gameover_sound = pygame.mixer.Sound('sound_files/gameover.wav')
+
+# Background music
+bgm_path = 'sound_files/bgm.wav'
+pygame.mixer.music.load(bgm_path)
+pygame.mixer.music.set_volume(0.5)
+pygame.mixer.music.play(-1)  # Loop forever
+music_muted = False
 
 # Set screen dimensions
 screen_width = 640
@@ -140,14 +150,27 @@ def draw_instructions():
 running = True
 while running:
     # Handle events
+
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_m:
+                # Mute/unmute music
+                music_muted = not music_muted
+                if music_muted:
+                    pygame.mixer.music.set_volume(0)
+                else:
+                    pygame.mixer.music.set_volume(0.5)
 
     if game_over:
         if score > high_score:
             high_score = score
             save_high_score(high_score)
+        # Play game over sound once
+        if not hasattr(game_over, 'played_sound'):
+            gameover_sound.play()
+            game_over.played_sound = True
         screen.fill((0, 0, 0))
         over_text = font_big.render('GAME OVER', True, (255, 0, 0))
         screen.blit(over_text, (screen_width//2 - 180, screen_height//2 - 60))
@@ -183,6 +206,8 @@ while running:
                     speed_display_text = ''
                     level_start_time = time.time()
                     game_over = False
+                    if hasattr(game_over, 'played_sound'):
+                        delattr(game_over, 'played_sound')
         continue
 
     # Move the ball
@@ -302,6 +327,7 @@ while running:
                 score += speed_bonus
                 speed_display_text = f'Speed Bonus! +{speed_bonus}'
                 speed_display_timer = 90
+        levelup_sound.play()
         level_start_time = time.time()
         level += 1
         # Increase ball speed slightly each level

@@ -403,6 +403,16 @@ pygame_samples/
 
 Enjoy the improved visuals! If you want further enhancements (animations, images, etc.), let me know.
 
+### 🔊 Breakout Custom Sound Files
+- To generate the required sound files for Breakout, run:
+  ```sh
+  cd breakout
+  python generate_breakout_sounds.py
+  ```
+- This will create `levelup.wav`, `gameover.wav`, and `bgm.wav` in `breakout/sound_files/`.
+- If you see a FileNotFoundError for these files, make sure they exist in the correct folder (`breakout/sound_files/`).
+- If you move or rename the sound files, update the paths in `main.py` accordingly.
+
 ### ✨ **New Features:**
 - **🟡 Enhanced Pac-Man** - Complete classic implementation with maze, power pellets, and ghost AI
 - **🐍 Snake Game** - Classic arcade game with wrap-around edges and progressive difficulty

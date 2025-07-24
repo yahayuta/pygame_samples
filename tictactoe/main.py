@@ -8,8 +8,8 @@ pygame.init()
 pygame.mixer.init()
 
 # Load sound file
-hit = pygame.mixer.Sound('sound_files/hit.mp3')
-end = pygame.mixer.Sound('sound_files/end.mp3')
+hit = pygame.mixer.Sound('sound_files/hit.wav')
+end = pygame.mixer.Sound('sound_files/end.wav')
 
 # Set the dimensions of the window
 width = 300

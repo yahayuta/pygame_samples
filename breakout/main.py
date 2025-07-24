@@ -11,9 +11,9 @@ pygame.mixer.init()
 
 
 # Load sound files
-paddle_sound = pygame.mixer.Sound('sound_files/paddle.mp3')
-brick_sound = pygame.mixer.Sound('sound_files/brick.mp3')
-wall_sound = pygame.mixer.Sound('sound_files/wall.mp3')
+paddle_sound = pygame.mixer.Sound('sound_files/paddle.wav')
+brick_sound = pygame.mixer.Sound('sound_files/brick.wav')
+wall_sound = pygame.mixer.Sound('sound_files/wall.wav')
 levelup_sound = pygame.mixer.Sound('sound_files/levelup.wav')
 gameover_sound = pygame.mixer.Sound('sound_files/gameover.wav')
 

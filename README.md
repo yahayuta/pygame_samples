@@ -403,15 +403,23 @@ pygame_samples/
 
 Enjoy the improved visuals! If you want further enhancements (animations, images, etc.), let me know.
 
-### 🔊 Breakout Custom Sound Files
-- To generate the required sound files for Breakout, run:
+### 🔊 Custom Sound Files (All Games)
+
+All games use `.wav` files for sound effects and music. If you see errors about missing sound files (such as `FileNotFoundError: No file 'sound_files/paddle.wav' found...`), you need to generate them:
+
+- **To generate sound files for all games:**
+  ```sh
+  python generate_sounds.py
+  ```
+- **To generate only Breakout's special sounds:**
   ```sh
   cd breakout
   python generate_breakout_sounds.py
   ```
-- This will create `levelup.wav`, `gameover.wav`, and `bgm.wav` in `breakout/sound_files/`.
-- If you see a FileNotFoundError for these files, make sure they exist in the correct folder (`breakout/sound_files/`).
-- If you move or rename the sound files, update the paths in `main.py` accordingly.
+- This will create all required `.wav` files in each game's `sound_files/` folder (e.g., `breakout/sound_files/`, `pong/sound_files/`, etc.).
+- If you see a `FileNotFoundError` for a `.wav` file, make sure it exists in the correct folder for that game. If you are running a game from inside its folder, you may need to run the sound generation script from the project root.
+- If you move or rename any sound files, update the paths in the corresponding `main.py`.
+- **Note:** All sound file references and generators now use `.wav` for consistency. Old `.mp3` files are no longer used and can be safely deleted.
 
 ### ✨ **New Features:**
 - **🟡 Enhanced Pac-Man** - Complete classic implementation with maze, power pellets, and ghost AI

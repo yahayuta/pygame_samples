@@ -13,7 +13,7 @@ pygame.mixer.init()
 
 # Load sound files
 try:
-    start_sound = pygame.mixer.Sound('sound_files/start.mp3')
+    start_sound = pygame.mixer.Sound('sound_files/start.wav')
     win_sound = pygame.mixer.Sound('sound_files/win.wav')
     # Add new sound effects
     coin_sound = pygame.mixer.Sound('sound_files/coin_drop.wav') if pygame.mixer.get_init() else None

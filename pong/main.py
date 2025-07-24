@@ -8,9 +8,9 @@ pygame.init()
 pygame.mixer.init()
 
 # Load sound file
-ping = pygame.mixer.Sound('sound_files/ping.mp3')
-pong = pygame.mixer.Sound('sound_files/pong.mp3')
-get = pygame.mixer.Sound('sound_files/get.mp3')
+ping = pygame.mixer.Sound('sound_files/ping.wav')
+pong = pygame.mixer.Sound('sound_files/pong.wav')
+get = pygame.mixer.Sound('sound_files/get.wav')
 
 # Set up the display
 width = 800

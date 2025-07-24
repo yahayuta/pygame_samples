@@ -435,21 +435,21 @@ def main():
     create_invader_killed_sound('space_invaders/sound_files/invaderkilled.wav')
     
     # Generate Pong sounds
-    create_ping_sound('pong/sound_files/ping.mp3')
-    create_pong_sound('pong/sound_files/pong.mp3')
-    create_get_sound('pong/sound_files/get.mp3')
+    create_ping_sound('pong/sound_files/ping.wav')
+    create_pong_sound('pong/sound_files/pong.wav')
+    create_get_sound('pong/sound_files/get.wav')
     
     # Generate Breakout sounds
-    create_paddle_sound('breakout/sound_files/paddle.mp3')
-    create_brick_sound('breakout/sound_files/brick.mp3')
-    create_wall_sound('breakout/sound_files/wall.mp3')
+    create_paddle_sound('breakout/sound_files/paddle.wav')
+    create_brick_sound('breakout/sound_files/brick.wav')
+    create_wall_sound('breakout/sound_files/wall.wav')
     
     # Generate Tic Tac Toe sounds
-    create_hit_sound('tictactoe/sound_files/hit.mp3')
-    create_end_sound('tictactoe/sound_files/end.mp3')
+    create_hit_sound('tictactoe/sound_files/hit.wav')
+    create_end_sound('tictactoe/sound_files/end.wav')
     
     # Generate Slot Machine sounds
-    create_start_sound('slot_machine/sound_files/start.mp3')
+    create_start_sound('slot_machine/sound_files/start.wav')
     create_win_sound('slot_machine/sound_files/win.wav')
     
     # Generate Torpedo Attack sounds (reuse existing)
@@ -469,10 +469,10 @@ def main():
     print("✅ All sound files generated successfully!")
     print("Generated sounds for:")
     print("- Space Invaders: shoot.wav, explosion.wav, invaderkilled.wav")
-    print("- Pong: ping.mp3, pong.mp3, get.mp3")
-    print("- Breakout: paddle.mp3, brick.mp3, wall.mp3")
-    print("- Tic Tac Toe: hit.mp3, end.mp3")
-    print("- Slot Machine: start.mp3, win.wav")
+    print("- Pong: ping.wav, pong.wav, get.wav")
+    print("- Breakout: paddle.wav, brick.wav, wall.wav")
+    print("- Tic Tac Toe: hit.wav, end.wav")
+    print("- Slot Machine: start.wav, win.wav")
     print("- Torpedo Attack: shoot.wav, explosion.wav")
     print("- Snake: eat.wav, game_over.wav")
     print("- Pac-Man: eat.wav, power.wav, ghost_eaten.wav, death.wav")

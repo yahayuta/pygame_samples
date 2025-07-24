@@ -43,7 +43,7 @@ A collection of **17 classic arcade games** built with [Pygame](https://www.pyga
 | 🃏 **Blackjack** | Card | H/S Keys | Beat dealer to 21 |
 | 🏓 **Breakout** | Arcade | Arrow Keys | Break bricks with ball |
 | 🏎️ **Car Race** | Racing | Arrow Keys | Dodge enemy cars |
-| 🐸 **Frogger** | Arcade | Arrow Keys | Cross road safely |
+| 🐸 **Frogger** | Arcade | Arrow Keys | Cross road safely, collect power-ups, and progress through levels |
 | 🃏 **Poker** | Card | Spacebar | Classic 5-card poker |
 | 🏓 **Pong** | Arcade | Up/Down | Player vs Computer |
 | ⚫ **Reversi** | Strategy | Mouse Click | Flip opponent's pieces |
@@ -157,6 +157,8 @@ python snake/main.py
 - **Controls**: Arrow keys to move
 - **Scoring**: Points for reaching top
 - **Game Over**: Hit by enemy
+- **Features**:
+  - Cross road safely, collect power-ups, and progress through levels
 
 ### 🃏 Poker
 - **Objective**: Get the best 5-card hand and win all the chips!

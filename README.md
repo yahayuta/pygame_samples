@@ -348,38 +348,53 @@ python snake/main.py
 
 ```
 pygame_samples/
-├── 🎮 Games
-│   ├── pacman/           # Pac-Man clone
-│   ├── blackjack/        # Blackjack card game
-│   ├── breakout/         # Breakout brick breaker
-│   ├── car_race/         # Car racing game
-│   ├── frogger/          # Frogger arcade game
-│   ├── poker/            # Poker card game
-│   ├── pong/             # Pong vs Computer
-│   ├── reversi/          # Reversi strategy game
-│   ├── rock_paper_scissors/  # Rock Paper Scissors
-│   ├── slot_machine/     # Slot machine game
-│   ├── space_invaders/   # Space Invaders shooter
-│   ├── tetris/           # Tetris puzzle game
-│   ├── tictactoe/        # Tic Tac Toe
-│   ├── torpedo_attack/   # Torpedo Attack shooter
-│   └── snake/            # Snake arcade game
-│   └── asteroids/        # Asteroids arcade game
-│   └── missile_command/  # Missile Command arcade game
+├── 🎮 Games (17 total)
+│   ├── asteroids/           # Asteroids arcade game
+│   ├── blackjack/          # Blackjack card game  
+│   ├── breakout/           # Breakout brick breaker
+│   ├── car_race/           # Car racing game
+│   ├── frogger/            # Frogger arcade game
+│   ├── missile_command/    # Missile Command arcade game
+│   ├── pacman/             # Pac-Man clone
+│   ├── poker/              # Poker card game
+│   ├── pong/               # Pong vs Computer
+│   ├── reversi/            # Reversi strategy game
+│   ├── rock_paper_scissors/ # Rock Paper Scissors
+│   ├── slot_machine/       # Slot machine game
+│   ├── snake/              # Snake arcade game
+│   ├── space_invaders/     # Space Invaders shooter
+│   ├── tetris/             # Tetris puzzle game
+│   ├── tictactoe/          # Tic Tac Toe (enhanced)
+│   └── torpedo_attack/     # Torpedo Attack shooter
 ├── 🎵 Assets
-│   ├── cards/            # Card images
-│   ├── sound_files/      # Audio effects (generated)
-│   └── image_files/      # Game graphics
+│   └── sound_files/        # Root level sound files (for breakout)
 ├── 🚀 Launchers
-│   └── start_games.bat   # Windows game launcher
+│   └── start_games.bat     # Windows game launcher
 ├── 🛠️ Tools
-│   └── generate_sounds.py # Sound file generator
+│   └── generate_sounds.py  # Sound file generator
 └── 📄 Documentation
-    ├── README.md         # This file
-    └── .gitignore        # Git ignore rules
+    ├── README.md           # Project documentation
+    ├── LICENSE             # MIT License
+    ├── .gitignore          # Git ignore rules
+    └── .gitattributes     # Git attributes
 ```
 
+**Each game directory contains:**
+- `main.py` - Main game file
+- `sound_files/` - Game-specific audio effects
+- `images/` or `cards/` or `image_files/` - Game assets
+- `*_high_score.*` - Score tracking files (where applicable)
+
 ## 🆕 Recent Updates
+
+### 🧹 **Project Cleanup & Organization - Major Restructure!**
+- **Removed Duplicate Files**: Eliminated redundant nested directories and duplicate sound files
+- **Cleaned Cache Files**: Removed all `__pycache__` directories and `.pyc` files
+- **Organized File Structure**: Each game now has its own clean directory with proper assets
+- **Removed Empty Directories**: Cleaned up unused `sounds/` and `docs/` directories
+- **Improved Project Size**: Reduced repository size by removing duplicate files
+- **Better Maintainability**: Clear, consistent file organization across all games
+- **Enhanced Navigation**: Logical file placement for easier development
 
 ### 🟡 **Enhanced Pac-Man - Major Upgrade!**
 - **Classic Maze Layout** - Authentic Pac-Man maze with walls and corridors

@@ -20,7 +20,7 @@ A collection of **17 classic arcade games** built with [Pygame](https://www.pyga
 
 ## 🎯 Features
 
-- ✅ **16 Complete Games** - All fully playable
+- ✅ **17 Complete Games** - All fully playable
 - 🎨 **Modern UI** - Clean, responsive interfaces
 - 💵 **Casino-Style Betting in Blackjack** - Chip-based betting, bankroll management, and polished casino look
 - 🔊 **Sound Effects** - Immersive audio experience
@@ -276,9 +276,20 @@ python snake/main.py
   - **Bugfix**: Bricks now stack all the way to the bottom row
 
 ### ❌ Tic Tac Toe
-- **Objective**: Get 3 in a row
-- **Controls**: Mouse click to place X or O
-- **Scoring**: Win/Loss/Draw
+- **Objective**: Get 3 in a row (X's and O's)
+- **Controls**: Mouse click to place your mark
+- **Game Modes**: 
+  - Human vs Human
+  - Human vs Computer (AI uses minimax algorithm)
+- **Scoring**: Persistent scoreboard tracking wins for X, O, and ties
+- **Features**:
+  - **Smart AI**: Computer uses minimax algorithm for optimal play
+  - **Visual Feedback**: Hover effects, winning line highlighting in gold
+  - **Sound Effects**: Hit sound for moves, end sound for game completion
+  - **Score Tracking**: Persistent scoreboard showing X wins, O wins, and ties
+  - **Restart Button**: Easy game reset without closing
+  - **Message Boxes**: Clear win/tie announcements with overlay
+  - **Modern UI**: Clean interface with rounded buttons and professional styling
 
 ### 🚀 Torpedo Attack
 - **Objective**: Sink enemy ships
@@ -398,6 +409,17 @@ pygame_samples/
 - **Better Score Display** - Color-coded counters with background boxes
 - **Clear Result Layout** - Prominent "RESULT" header with organized choice display
 
+### ❌ **Enhanced Tic Tac Toe - Major Upgrade!**
+- **Smart AI**: Computer opponent uses minimax algorithm for optimal play
+- **Dual Game Modes**: Human vs Human and Human vs Computer
+- **Visual Enhancements**: Hover effects, winning line highlighting in gold
+- **Sound System**: Hit sound for moves, end sound for game completion
+- **Persistent Scoreboard**: Tracks wins for X, O, and ties across games
+- **Modern UI**: Clean interface with rounded buttons and professional styling
+- **Game State Management**: Proper boundary checking and error prevention
+- **Message System**: Clear win/tie announcements with overlay display
+- **Restart Functionality**: Easy game reset without closing the application
+
 ### 🎨 **Breakout - Graphics & Visuals Update (July 2025)**
 - Added a background color gradient for a modern look.
 - Ball and paddle now have colored borders and a shine effect.
@@ -429,7 +451,7 @@ All games use `.wav` files for sound effects and music. If you see errors about 
 - **✂️ Enhanced Rock Paper Scissors** - Professional UI with color-coded results and improved game flow
 - **📖 On-Screen Instructions** - Every game now displays controls and objectives directly on screen
 - **🎮 Enhanced Gameplay** - Improved mechanics in Space Invaders, Poker, and Frogger
-- **🚀 Easy Launcher** - One-click game launcher for Windows users (now with 16 games!)
+- **🚀 Easy Launcher** - One-click game launcher for Windows users (now with 17 games!)
 - **📋 Better Documentation** - Comprehensive README with game details
 - **🤖 AI Opponents** - Computer-controlled opponents in Pong
 - **🎵 Sound Generation** - Programmatically created audio effects
@@ -442,7 +464,7 @@ All games use `.wav` files for sound effects and music. If you see errors about 
 - **Frogger**: Removed duplicate code, cleaner implementation
 - **Pong**: Added computer AI opponent with smart ball tracking
 - **Torpedo Attack**: Added sound effects and slower ship speeds
-- **Batch Launcher**: Updated to include all 16 games with proper navigation
+- **Batch Launcher**: Updated to include all 17 games with proper navigation
 - **All Games**: Added on-screen instructions for instant learning
 
 ### 🎯 **User Experience:**

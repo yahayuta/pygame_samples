@@ -348,13 +348,14 @@ python snake/main.py
 
 ```
 pygame_samples/
-├── 🎮 Games (17 total)
+├── 🎮 Games (18 total)
 │   ├── asteroids/           # Asteroids arcade game
 │   ├── blackjack/          # Blackjack card game  
 │   ├── breakout/           # Breakout brick breaker
 │   ├── car_race/           # Car racing game
 │   ├── frogger/            # Frogger arcade game
 │   ├── missile_command/    # Missile Command arcade game
+│   ├── minesweeper/        # Minesweeper puzzle game
 │   ├── pacman/             # Pac-Man clone
 │   ├── poker/              # Poker card game
 │   ├── pong/               # Pong vs Computer

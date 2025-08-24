@@ -88,7 +88,7 @@ cd pygame_samples
 
 ### Step 2: Install Dependencies
 ```bash
-pip install pygame
+pip install pygame numpy
 ```
 
 ### Step 3: Generate Sound Files (Optional)
@@ -109,21 +109,81 @@ python tetris/main.py
 
 ## 🎯 How to Play
 
-(Includes all previous game instructions, plus...)
+### 🟡 Pac-Man
+- **Objective**: Eat all dots while avoiding ghosts
+- **Controls**: Arrow keys to move
+
+### 🃏 Blackjack
+- **Objective**: Beat dealer without going over 21
+- **Controls**: `H` - Hit, `S` - Stay
+
+### 🏓 Breakout
+- **Objective**: Break all bricks with the ball
+- **Controls**: Left/Right arrows to move paddle
+
+### 🏎️ Car Race
+- **Objective**: Avoid enemy cars as long as possible
+- **Controls**: Left/Right arrows to change lanes
+
+### 🐸 Frogger
+- **Objective**: Cross the road to reach the top
+- **Controls**: Arrow keys to move
+
+### 🃏 Poker
+- **Objective**: Get the best 5-card hand
+- **Controls**: See in-game help
+
+### 🏓 Pong
+- **Objective**: Score by getting ball past computer
+- **Controls**: Up/Down arrows to move right paddle
+
+### ⚫ Reversi
+- **Objective**: Capture opponent's pieces
+- **Controls**: Mouse click to place piece
+
+### ✂️ Rock Paper Scissors
+- **Objective**: Beat the computer
+- **Controls**: `R` - Rock, `P` - Paper, `S` - Scissors
+
+### 🎰 Slot Machine
+- **Objective**: Match symbols to win
+- **Controls**: Mouse click to Spin
+
+### 👾 Space Invaders
+- **Objective**: Shoot all alien invaders
+- **Controls**: Arrow keys to move, Spacebar to shoot
+
+### 🧩 Tetris (Enhanced)
+- **Objective**: Complete horizontal lines to clear them
+- **Controls**: Arrow Keys, Space, H, P
+
+### ❌ Tic Tac Toe
+- **Objective**: Get 3 in a row
+- **Controls**: Mouse click to place your mark
+
+### 🚀 Torpedo Attack
+- **Objective**: Sink enemy ships
+- **Controls**: Any key to fire torpedo
+
+### 🐍 Snake
+- **Objective**: Eat food to grow longer
+- **Controls**: Arrow keys to change direction
+
+### 🚀 Asteroids
+- **Objective**: Destroy all asteroids and survive
+- **Controls**: Arrow keys to move, Space to shoot
+
+### 🎯 Missile Command
+- **Objective**: Defend your cities from incoming missiles
+- **Controls**: Mouse/Arrow Keys + Space
 
 ### 💣 Minesweeper
 - **Objective**: Find all the mines without detonating any of them.
-- **Controls**:
-  - **Left Click**: Reveal a tile.
-  - **Right Click**: Flag a tile.
-- **Game Over**: Click on a mine.
+- **Controls**: Left Click to reveal, Right Click to flag.
 
 ### ⛏️ Dig Dug
 - **Objective**: Defeat all enemies by pumping them up or dropping rocks on them.
-- **Controls**:
-  - **Arrow Keys**: Move and dig.
-  - **Spacebar**: Fire harpoon and pump enemies.
-- **Game Over**: Collide with an enemy or get crushed by a rock.
+- **Controls**: Arrow Keys to move, Spacebar to pump.
 
 ## 📁 Project Structure
 

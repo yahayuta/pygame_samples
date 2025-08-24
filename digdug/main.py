@@ -2,7 +2,7 @@ import pygame
 import random
 import os
 
-# Constants
+# --- Constants and Setup ---
 GRID_WIDTH = 20
 GRID_HEIGHT = 15
 CELL_SIZE = 40
@@ -17,14 +17,25 @@ WHITE = (255, 255, 255)
 RED = (255, 0, 0)
 YELLOW = (255, 255, 0)
 
-# Game Assets
+# --- Path Correction ---
+# This is a special fix for an unusual shell environment that provides a malformed path.
+abs_path = os.path.abspath(__file__)
+if len(abs_path) > 2 and abs_path[1] == ':' and abs_path[2] != '\\':
+    abs_path = abs_path[0:2] + '\\' + abs_path[2:]
+SCRIPT_DIR = os.path.dirname(abs_path)
+ASSET_DIR = os.path.join(SCRIPT_DIR, "assets")
+HIGH_SCORE_FILE = os.path.join(SCRIPT_DIR, "digdug_high_score.txt")
+
+# --- Game Asset Globals ---
 DIRT_IMG = None
 PLAYER_IMG = None
 POOKA_IMG = None
 ROCK_IMG = None
-
-HIGH_SCORE_FILE = "digdug_high_score.txt"
-SCRIPT_DIR = os.path.dirname(__file__) #<-- absolute dir the script is in
+SOUND_DIG = None
+SOUND_PUMP = None
+SOUND_POP = None
+SOUND_ROCK = None
+SOUND_DEATH = None
 
 # --- Classes ---
 class Player:
@@ -59,6 +70,7 @@ class Rock:
                 self.fall_timer += 1
                 if self.fall_timer > 30:
                     self.state = 'falling'
+                    SOUND_ROCK.play()
             else:
                 self.fall_timer = 0
         elif self.state == 'falling':
@@ -93,6 +105,7 @@ class Enemy:
         elif self.state == 'inflating':
             if self.inflation >= 4:
                 self.state = 'dying'
+                SOUND_POP.play()
 
     def move(self, dirt_grid, player):
         if self.state == 'inflating': return
@@ -128,15 +141,13 @@ class Dirt:
 
 # --- Game State & UI Functions ---
 def load_high_score():
-    file_path = os.path.join(SCRIPT_DIR, HIGH_SCORE_FILE)
-    if os.path.exists(file_path):
-        with open(file_path, 'r') as f:
+    if os.path.exists(HIGH_SCORE_FILE):
+        with open(HIGH_SCORE_FILE, 'r') as f:
             return int(f.read())
     return 0
 
 def save_high_score(score):
-    file_path = os.path.join(SCRIPT_DIR, HIGH_SCORE_FILE)
-    with open(file_path, 'w') as f:
+    with open(HIGH_SCORE_FILE, 'w') as f:
         f.write(str(score))
 
 def reset_level(player):
@@ -193,18 +204,27 @@ def draw_gameplay(screen, player, dirt_grid, rocks, enemies):
 
 # --- Main Game Loop ---
 def main():
-    global DIRT_IMG, PLAYER_IMG, POOKA_IMG, ROCK_IMG
+    global DIRT_IMG, PLAYER_IMG, POOKA_IMG, ROCK_IMG, SOUND_DIG, SOUND_PUMP, SOUND_POP, SOUND_ROCK, SOUND_DEATH
     pygame.init()
+    pygame.mixer.init()
     screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
     pygame.display.set_caption("Dig Dug")
     clock = pygame.time.Clock()
 
-    DIRT_IMG = pygame.image.load(os.path.join(SCRIPT_DIR, "assets", "dirt.png")).convert()
-    PLAYER_IMG = pygame.image.load(os.path.join(SCRIPT_DIR, "assets", "player.png")).convert_alpha()
-    POOKA_IMG = pygame.image.load(os.path.join(SCRIPT_DIR, "assets", "pooka.png")).convert_alpha()
-    ROCK_IMG = pygame.image.load(os.path.join(SCRIPT_DIR, "assets", "rock.png")).convert_alpha()
+    # Load Images
+    DIRT_IMG = pygame.image.load(os.path.join(ASSET_DIR, "dirt.png")).convert()
+    PLAYER_IMG = pygame.image.load(os.path.join(ASSET_DIR, "player.png")).convert_alpha()
+    POOKA_IMG = pygame.image.load(os.path.join(ASSET_DIR, "pooka.png")).convert_alpha()
+    ROCK_IMG = pygame.image.load(os.path.join(ASSET_DIR, "rock.png")).convert_alpha()
 
-    player, dirt_grid, rocks, enemies = reset_level(Player(0,0)) # Initial reset
+    # Load Sounds
+    SOUND_DIG = pygame.mixer.Sound(os.path.join(ASSET_DIR, "dig.wav"))
+    SOUND_PUMP = pygame.mixer.Sound(os.path.join(ASSET_DIR, "pump.wav"))
+    SOUND_POP = pygame.mixer.Sound(os.path.join(ASSET_DIR, "pop.wav"))
+    SOUND_ROCK = pygame.mixer.Sound(os.path.join(ASSET_DIR, "rock.wav"))
+    SOUND_DEATH = pygame.mixer.Sound(os.path.join(ASSET_DIR, "death.wav"))
+
+    player, dirt_grid, rocks, enemies = reset_level(Player(0,0))
     player.lives = 3
     score = 0
     high_score = load_high_score()
@@ -231,6 +251,8 @@ def main():
                         player.direction = (0, 1)
                         if player.y < GRID_HEIGHT -1 and not dirt_grid[player.x][player.y + 1].is_rock: player.y += 1; moved = True
                     if moved:
+                        if not dirt_grid[player.x][player.y].is_dug:
+                            SOUND_DIG.play()
                         dirt_grid[player.x][player.y].is_dug = True
                         if player.is_pumping:
                             player.attached_enemy.state = 'normal'
@@ -239,6 +261,7 @@ def main():
                     if event.key == pygame.K_SPACE:
                         if player.is_pumping:
                             player.attached_enemy.inflation += 1
+                            SOUND_PUMP.play()
                         else:
                             check_x, check_y = player.x + player.direction[0], player.y + player.direction[1]
                             for enemy in enemies:
@@ -246,6 +269,7 @@ def main():
                                     player.is_pumping = True
                                     player.attached_enemy = enemy
                                     enemy.state = 'inflating'
+                                    SOUND_PUMP.play()
                                     break
             
             # Update Logic
@@ -257,6 +281,7 @@ def main():
             for enemy in enemies:
                 if enemy.state != 'dying' and player_rect.colliderect(pygame.Rect(enemy.x*CELL_SIZE, enemy.y*CELL_SIZE, CELL_SIZE, CELL_SIZE)):
                     player.lives -= 1
+                    SOUND_DEATH.play()
                     if player.lives <= 0: game_state = 'game_over'
                     else: player, dirt_grid, rocks, enemies = reset_level(player)
             for rock in rocks:
@@ -264,17 +289,18 @@ def main():
                     rock_rect = pygame.Rect(rock.x*CELL_SIZE, rock.y*CELL_SIZE, CELL_SIZE, CELL_SIZE)
                     if player_rect.colliderect(rock_rect):
                         player.lives -= 1
+                        SOUND_DEATH.play()
                         if player.lives <= 0: game_state = 'game_over'
                         else: player, dirt_grid, rocks, enemies = reset_level(player)
                     for enemy in enemies:
                         if rock_rect.colliderect(pygame.Rect(enemy.x*CELL_SIZE, enemy.y*CELL_SIZE, CELL_SIZE, CELL_SIZE)):
                             enemy.state = 'dying'
-                            score += 500 # Crushed enemy score
+                            score += 500
 
             # Remove dead enemies and add score
             dead_enemies = [e for e in enemies if e.state == 'dying']
             for dead_enemy in dead_enemies:
-                score += (dead_enemy.y + 1) * 100 # Deeper enemies are worth more
+                score += (dead_enemy.y + 1) * 100
             enemies = [e for e in enemies if e.state != 'dying']
             rocks = [r for r in rocks if r.state != 'dead']
 

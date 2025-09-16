@@ -30,13 +30,14 @@ echo  16. Asteroids
 echo  17. Missile Command
 echo  18. Minesweeper
 echo  19. Dig Dug
+echo  20. Puyo Puyo
 echo.
 echo  0.  Exit
 echo.
 echo  ========================================
 echo.
 
-set /p choice="Enter your choice (0-19): "
+set /p choice="Enter your choice (0-20): "
 
 if "%choice%"=="1" goto pacman
 if "%choice%"=="2" goto blackjack
@@ -57,6 +58,7 @@ if "%choice%"=="16" goto asteroids
 if "%choice%"=="17" goto missile_command
 if "%choice%"=="18" goto minesweeper
 if "%choice%"=="19" goto digdug
+if "%choice%"=="20" goto puyopuyo
 if "%choice%"=="0" goto exit
 goto menu
 
@@ -208,6 +210,14 @@ goto menu
 cls
 echo Starting Dig Dug...
 cd digdug
+python main.py
+cd ..
+goto menu
+
+:puyopuyo
+cls
+echo Starting Puyo Puyo...
+cd puyopuyo
 python main.py
 cd ..
 goto menu

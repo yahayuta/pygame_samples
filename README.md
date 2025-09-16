@@ -5,7 +5,7 @@
 [![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Active-brightgreen.svg)](https://github.com/yourusername/pygame_samples)
 
-A collection of **19 classic arcade games** built with [Pygame](https://www.pygame.org/). Perfect for learning game development and having fun! 🚀
+A collection of **20 classic arcade games** built with [Pygame](https://www.pygame.org/). Perfect for learning game development and having fun! 🚀
 
 ## 📋 Table of Contents
 
@@ -20,7 +20,7 @@ A collection of **19 classic arcade games** built with [Pygame](https://www.pyga
 
 ## 🎯 Features
 
-- ✅ **19 Complete Games** - All fully playable
+- ✅ **20 Complete Games** - All fully playable
 - 🎨 **Modern UI** - Clean, responsive interfaces
 - 💵 **Casino-Style Betting in Blackjack** - Chip-based betting, bankroll management, and polished casino look
 - 🔊 **Sound Effects** - Immersive audio experience
@@ -58,6 +58,7 @@ A collection of **19 classic arcade games** built with [Pygame](https://www.pyga
 | 🎯 **Missile Command** | Arcade | Mouse/Arrow Keys + Space | Defend cities from incoming missiles |
 | 💣 **Minesweeper** | Puzzle | Mouse Click | Find all the mines without detonating any of them. |
 | ⛏️ **Dig Dug** | Arcade | Arrow Keys + Space | Dig tunnels, defeat enemies with an air pump, and drop rocks. |
+| 💧 **Puyo Puyo** | Puzzle | Arrow Keys | Match 4+ same-colored Puyos to clear them and trigger combos. |
 
 ## ⚡ Quick Start
 
@@ -185,11 +186,15 @@ python tetris/main.py
 - **Objective**: Defeat all enemies by pumping them up or dropping rocks on them.
 - **Controls**: Arrow Keys to move, Spacebar to pump.
 
+### 💧 Puyo Puyo
+- **Objective**: Match 4 or more same-colored Puyos to clear them from the board.
+- **Controls**: Left/Right to move, Up to rotate, Down to drop faster.
+
 ## 📁 Project Structure
 
 ```
 pygame_samples/
-├── 🎮 Games (19 total)
+├── 🎮 Games (20 total)
 │   ├── asteroids/
 │   ├── blackjack/
 │   ├── breakout/
@@ -201,6 +206,7 @@ pygame_samples/
 │   ├── pacman/
 │   ├── poker/
 │   ├── pong/
+│   ├── puyopuyo/
 │   ├── reversi/
 │   ├── rock_paper_scissors/
 │   ├── slot_machine/
